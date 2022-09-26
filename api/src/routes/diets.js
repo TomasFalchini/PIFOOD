@@ -1,4 +1,4 @@
-const { Recipes, Diets } = require("./db.js");
+const { Recipes, Diets } = require("../db.js");
 const { Router } = require("express");
 
 const dietsRoute = Router();

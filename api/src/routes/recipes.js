@@ -1,6 +1,8 @@
-const { Recipes, Diets } = require("./db.js");
+const fetch = (...args) =>
+  import("node-fetch").then(({ default: fetch }) => fetch(...args));
+const { Recipes, Diets } = require("../db.js");
 const { Router } = require("express");
-const e = require("express");
+
 const { API_KEY } = process.env;
 
 const recipesRoute = Router();
@@ -38,10 +40,13 @@ recipesRoute.get("/", async (req, res, next) => {
   let array = [];
   // cuando aprenda lo de cookie parser, agergar lo de math random etc
   await fetch(
-    `https://api.spoonacular.com/recipes/complexSearch&addRecipeInformation=true&apiKey=${API_KEY}&number=100`
+    `https://api.spoonacular.com/recipes/complexSearch?addRecipeInformation=true&apiKey=${API_KEY}&number=100`
   )
-    .then((res) => res.json())
+    .then((res) => {
+      return res.json();
+    })
     .then(async (data) => {
+      console.log(data);
       array = data["results"].map((el) =>
         Recipes.create({
           name: el.title,
