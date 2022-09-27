@@ -5,10 +5,7 @@ const preChargeDiets = require("../controllers/preChargeDiets.js");
 const dietsRoute = Router();
 
 dietsRoute.get("/", async (req, res, next) => {
-  let diets = await Diet.findAll();
-  if (diets.length < 1) {
-    diets = await preChargeDiets();
-  }
+  let diets = await preChargeDiets();
   res.status(200).send(diets);
 });
 

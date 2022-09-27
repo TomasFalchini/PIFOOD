@@ -38,11 +38,17 @@ recipesRoute.get("/", async (req, res, next) => {
   let recipes = await Recipe.findAll({
     include: Diet,
   });
-  if (recipes.length > 0) {
+  if (recipes.length > 99) {
     return res.status(200).send(recipes);
   }
   let array = await loadData();
-  recipes = await Recipe.bulkCreate(array, {
+  let array2 = [];
+  for (let i = 0; i < array.length; i++) {
+    let { name, resume, health_score, steps, image, Diets } = array[i];
+    array2.push(createRecipe(name, resume, health_score, steps, image, Diets));
+  }
+  await Promise.all(array2);
+  recipes = await Recipe.findAll({
     include: Diet,
   });
 
@@ -65,25 +71,18 @@ recipesRoute.get("/:idReceta", async (req, res, next) => {
 
 recipesRoute.post("/create", async (req, res, next) => {
   const { name, resume, health_score, steps, image, diet } = req.body;
-  //diet va a ser un array de lo q seleccione en los selects.
-  console.log(name, resume, health_score, steps, image, diet);
   try {
-    let recipe = await Recipe.create({
-      name: name,
-      resume: resume,
-      health_score: health_score,
-      steps: steps,
-      image: image,
-    });
-    let diets = await Diet.findAll({
-      where: {
-        name: {
-          [Op.like]: { [Op.any]: diet },
-        },
-      },
-    });
-    await recipe.setDiets(diets);
-    res.status(200).send("Se ha creado la receta con exito!");
+    let recipe = await createRecipe(
+      name,
+      resume,
+      health_score,
+      steps,
+      image,
+      diet
+    );
+    recipe
+      ? res.status(200).send("Se ha creado la receta con exito!")
+      : res.status(500).send("Algo ha fallado");
   } catch (err) {
     res.status(404).send(err.message);
   }

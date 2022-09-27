@@ -7,7 +7,7 @@ module.exports = {
     let recipes = await Recipe.findAll({
       where: {
         name: {
-          [Op.substring]: query,
+          [Op.iLike]: `%${query}%`,
         },
       },
       include: Diet,
