@@ -1,11 +1,12 @@
-const fetch = (...args) =>
-  import("node-fetch").then(({ default: fetch }) => fetch(...args));
-const { Recipes, Diets } = require("../db.js");
+const { Recipe, Diet } = require("../db.js");
 const { Router } = require("express");
-
-const { API_KEY } = process.env;
+const { Op } = require("sequelize");
 
 const recipesRoute = Router();
+const { loadData } = require("../controllers/fetchControler.js");
+const preChargeDiets = require("../controllers/preChargeDiets.js");
+const { findRecipes } = require("../controllers/findRecipes.js");
+const { createRecipe } = require("../controllers/createRecipe.js");
 
 //en ruta principal Imagen
 //(imagen, nombre, tipo de plato y tipo de dieta)
@@ -13,104 +14,80 @@ const recipesRoute = Router();
 // EN ruta de detalle imagne Nombre plato dieta health score,resume, steps.
 
 //de todo eso en database tengo guardado nombre dieta health score resume y steps.
-/* 
-name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      resume: {
-        type: DataTypes.TEXT,
-        allowNull: false,
-      },
-      health_score: {
-        type: DataTypes.INTEGER,
-      },
-      steps: {
-        type: DataTypes.TEXT,
-      },
-      ID: {
-        type: DataTypes.UUID,
-        allowNull: false,
-        primaryKey: true,
-      },
-      image: {
-*/
 
-recipesRoute.get("/", async (req, res, next) => {
-  let array = [];
-  // cuando aprenda lo de cookie parser, agergar lo de math random etc
-  await fetch(
-    `https://api.spoonacular.com/recipes/complexSearch?addRecipeInformation=true&apiKey=${API_KEY}&number=100`
-  )
-    .then((res) => {
-      return res.json();
-    })
-    .then(async (data) => {
-      console.log(data);
-      array = data["results"].map((el) =>
-        Recipes.create({
-          name: el.title,
-          resume: el.summary,
-          health_score: el.healthScore,
-          steps: concatSteps(el.analyzedInstructions[0]),
-          image: el.image,
-        })
-      );
-      await Promise.all(array);
-    })
-    .catch((err) => console.log(err));
-});
+//con esta linea me trae todo lo q tenga en la base de datos. si no tengo nada, hago el fetch por primera vez para buscar los datos y guardarlos.
 
-//sacar a controler:
-
-function concatSteps(instructions) {
-  let stepbystep = instructions["steps"]?.map((el) => {
-    let ingredients = el.ingredients?.map((el) => el.name).join(" ");
-    `Step Number ${el.number}:
-    Ingredients: ${ingredients}\n
-    ${el.step}`;
-  });
-  return stepbystep.join("\r\n");
-}
+//apikey1 =
+// apikey 2= 0c3aa48c3e9d4c7a9c8855e88ea27c40
+//si hay algo en database, responder con lo q tengo en database. si es la primera vez q cargo la pagina, hacer el llamado a la api, sino traer lo q esta en database. cuando filtro por name, fijarme de buscar aquella receta tanto en data base como en la api, y responder con eso al front. (todo lo q me traiga de la api guardarlo en data base).
+//fijarme q el llamado en get a data base lo haga siempre una vez que ya se cargaron las cosas, cosa q en este get me quede guardado lo q posteo (recetas nuevas) y lo que busque y filtre por nombre tambien. asi no tengo q hacer llamados a la api constantemente.
 
 recipesRoute.get("/", async (req, res, next) => {
   const { name } = req.query;
-  let recipe = await Recipes.findAll({
-    where: {
-      name: name,
-    },
-    include: Diets,
-  });
-  recipe ? res.status(200).send(recipe) : res.status(404).send("No existe");
+  if (name) {
+    let recipes = await findRecipes(name);
+    console.log(recipes);
+    recipes.length > 0
+      ? res.status(200).send(recipes)
+      : res.status(404).send("No existe");
+  } else next();
 });
 
-/* 
-Obtener el detalle de una receta en particular
-Debe traer solo los datos pedidos en la ruta de detalle de receta
-Incluir los tipos de dieta asociados
-*/
+recipesRoute.get("/", async (req, res, next) => {
+  preChargeDiets();
+  let recipes = await Recipe.findAll({
+    include: Diet,
+  });
+  if (recipes.length > 0) {
+    return res.status(200).send(recipes);
+  }
+  let array = await loadData();
+  recipes = await Recipe.bulkCreate(array, {
+    include: Diet,
+  });
+
+  return res.status(200).send(recipes);
+});
 
 recipesRoute.get("/:idReceta", async (req, res, next) => {
   const { idReceta } = req.params;
-  let recipe = await Recipes.findByPk(idReceta);
-  await fetch(
-    `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&number=100&addRecipeInformation=true&`
-  );
+  try {
+    let recipe = await Recipe.findByPk(idReceta, {
+      include: Diet,
+    });
+    recipe
+      ? res.status(200).send(recipe)
+      : res.status(404).send("Recipe Not Found");
+  } catch (err) {
+    res.status(404).send("Recipe Not Found");
+  }
 });
 
 recipesRoute.post("/create", async (req, res, next) => {
   const { name, resume, health_score, steps, image, diet } = req.body;
-  let recipe = await Recipes.create({
-    name: name,
-    resume: resume,
-    health_score: health_score,
-    steps: steps,
-    image: image,
-  });
-  let diets = await Diets.create({
-    name: diet,
-  });
-  recipe.setDiets(diets);
+  //diet va a ser un array de lo q seleccione en los selects.
+  console.log(name, resume, health_score, steps, image, diet);
+  try {
+    let recipe = await Recipe.create({
+      name: name,
+      resume: resume,
+      health_score: health_score,
+      steps: steps,
+      image: image,
+    });
+    let diets = await Diet.findAll({
+      where: {
+        name: {
+          [Op.like]: { [Op.any]: diet },
+        },
+      },
+    });
+    await recipe.setDiets(diets);
+    res.status(200).send("Se ha creado la receta con exito!");
+  } catch (err) {
+    res.status(404).send(err.message);
+  }
 });
+//sacar a controller createRecipe.js
 
 module.exports = recipesRoute;

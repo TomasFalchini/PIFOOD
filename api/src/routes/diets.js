@@ -1,26 +1,14 @@
-const { Recipes, Diets } = require("../db.js");
+const { Recipe, Diet } = require("../db.js");
 const { Router } = require("express");
+const preChargeDiets = require("../controllers/preChargeDiets.js");
 
 const dietsRoute = Router();
 
-const types = [
-  "Gluten Free",
-  "Ketogenic",
-  "Vegetarian",
-  "Lacto-Vegetarian",
-  "Ovo-Vegetarian",
-  "Vegan",
-  "Pescetarian",
-  "Paleo",
-  "Primal",
-  "Low FODMAP",
-  "Whole30",
-];
-
 dietsRoute.get("/", async (req, res, next) => {
-  //precargar en la data base los tipos de dieta ya definidos, dsps ir agregando los otros
-  let diets = await Diets.findAll();
-
+  let diets = await Diet.findAll();
+  if (diets.length < 1) {
+    diets = await preChargeDiets();
+  }
   res.status(200).send(diets);
 });
 
