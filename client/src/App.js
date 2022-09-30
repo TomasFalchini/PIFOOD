@@ -1,11 +1,11 @@
-import './App.css';
+import "./App.css";
+import React from "react";
+import { Link, Routes, Route } from "react-router-dom";
+
+//importar todos los componentes para armar las rutas de renderizado.
 
 function App() {
-  return (
-    <div className="App">
-      <h1>Henry Food</h1>
-    </div>
-  );
+  return {};
 }
 
 export default App;

@@ -26,7 +26,6 @@ recipesRoute.get("/", async (req, res, next) => {
   const { name } = req.query;
   if (name) {
     let recipes = await findRecipes(name);
-    console.log(recipes);
     recipes.length > 0
       ? res.status(200).send(recipes)
       : res.status(404).send("No existe");
