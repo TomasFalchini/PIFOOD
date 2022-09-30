@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 function CreateRecipe() {
   const [inputs, setInputs] = useState({
@@ -10,6 +11,8 @@ function CreateRecipe() {
   });
   const [steps, setSteps] = useState([]);
   const [diets, setDiets] = useState([]);
+
+  const DIETS = useSelector((state) => state.Diets);
 
   const handleOnChange = (e) => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
@@ -28,9 +31,23 @@ function CreateRecipe() {
     e.target.value = "";
   };
 
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
+    fetch
+      .post("http://localhost:3001/recipes/create")
+      .then((res) => res.json())
+      .then((response) => {
+        console.alert(response);
+      });
+  };
+
+  const regExpLettersOnly = /^[a-zA-Z\s]*$/gm;
+
+  const regExpLettersAndNumbers = /^[a-zA-Z0-9.,;:\s]*$/gm;
+
   return (
     <div className="CreateRecipe">
-      <form action="">
+      <form onSubmit={handleOnSubmit}>
         <input
           type="text"
           name="name"
@@ -39,12 +56,18 @@ function CreateRecipe() {
             handleOnChange(e);
           }}
         />
+        {regExpLettersOnly.test(inputs.name) ? null : (
+          <span className="Warning">Letters only</span>
+        )}
         <input
           type="text"
           onChange={handleOnChange}
           name="resume"
           value={inputs.resume}
         />
+        {regExpLettersOnly.test(inputs.resume) ? null : (
+          <span className="Warning">Letters only</span>
+        )}
         <input
           type="range"
           onChange={handleOnChange}
@@ -56,6 +79,16 @@ function CreateRecipe() {
           value=""
           placeholder="Add the next Step"
         />
+        {regExpLettersAndNumbers.test(inputs.steps) ? null : (
+          <span className="Warning">Letters and Numbers only</span>
+        )}
+        {steps.length > 0 ? (
+          <div>
+            {steps.map((el) => {
+              return <p>{el}</p>;
+            })}
+          </div>
+        ) : null}
         <input
           type="text"
           onChange={handleOnChange}
@@ -63,18 +96,20 @@ function CreateRecipe() {
           value={inputs.image}
         />
         <select onChange={addDiets} multiple={true} value={diets}>
-          <options value="Vegan">Vegan</options>
-          <options></options>
-          <options></options>
-          <options></options>
-          <options></options>
-          <options></options>
-          <options></options>
-          <options></options>
-          <options></options>
-          <options></options>
-          <options></options>
+          {DIETS.map((el) => {
+            return <options value={el}>{el}</options>;
+          })}
         </select>
+        <input
+          disabled={
+            !inputs.name ||
+            !inputs.resume ||
+            !regExpLettersOnly.test(inputs.name) ||
+            !regExpLettersOnly.test(inputs.resume) ||
+            !regExpLettersAndNumbers.test(inputs.steps)
+          }
+          type="submit"
+        />
       </form>
     </div>
   );
