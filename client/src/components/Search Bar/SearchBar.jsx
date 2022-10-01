@@ -4,18 +4,18 @@ import { ChangeTheme, GetRecipes } from "../../Redux/actions/index.js";
 
 /* Componente searchbar. Armar la lógica. Diseño bien simple. Un rectángulo bordes redondeados de input con un placeholder que sea un icono más una lupita, un botón de submit. Investigar funcionalidad de evento de teclado ctrl+k. Y para el enter. Q sea posición fixed para q me quede sobre la nav bar. O ver si puedo hacer renderizado condicional por ruta. Este va a tener un estado local para guardarme lo q escriba en el input y dsps mandárselo al back. */
 
-class SearchBar extends React.Component {
+export class SearchBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      input: null,
+      input: "",
     };
   }
 
   handleSearch = (e) => {
     e.preventDefault();
     this.props.getRecipes(this.state);
-    this.setState({ input: null });
+    this.setState({ input: "" });
   };
 
   handleChange = (e) => {
@@ -49,14 +49,14 @@ class SearchBar extends React.Component {
   }
 }
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   return {
     DarkTheme: state.DarkTheme,
     Recipes: state.Recipes,
   };
 }
 
-const mapDispatchToProps = (dispatch) => {
+export const mapDispatchToProps = (dispatch) => {
   return {
     // dispatching plain actions
     setTheme: () => dispatch(ChangeTheme()),
@@ -64,4 +64,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-connect(mapStateToProps, mapDispatchToProps)(SearchBar);
+export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);

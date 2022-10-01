@@ -13,20 +13,23 @@ import Filters from "./components/Filters/Filters.jsx";
 
 function App() {
   return (
-    <div>
-      <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/recipes" element={<NavBar />}>
-          <Route path="/">
-            <Filters />
-            <RecipesCards />
-            <Footer />
-          </Route>
-          <Route path="/create" element={<CreateRecipe />} />
-          <Route path="/:id" element={<RecipeDetails />} />
-        </Route>
-      </Routes>
-    </div>
+    <Routes>
+      <Route exact path="/" element={<Landing />} />
+      <Route path="home" element={<NavBar />}>
+        <Route
+          path="recipes"
+          element={
+            <>
+              <Filters />
+              <RecipesCards />
+              <Footer />
+            </>
+          }
+        />
+        <Route path="create" element={<CreateRecipe />} />
+        <Route path=":id" element={<RecipeDetails />} />
+      </Route>
+    </Routes>
   );
 }
 

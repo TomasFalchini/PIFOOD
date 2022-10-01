@@ -1,6 +1,6 @@
 //
 import React from "react";
-import { Link, Routes, Route } from "react-router-dom";
+import { Link, Routes, Route, Outlet } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ChangeTheme } from "../../Redux/actions/index.js";
 import SearchBar from "../Search Bar/SearchBar.jsx";
@@ -24,6 +24,9 @@ export default function NavBar() {
         <Route path="/recipes" element={<SearchBar />}></Route>
       </Routes>
       <button onClick={turnOn}>On / Off</button>
+      <div className="content">
+        <Outlet />
+      </div>
     </div>
   );
 }

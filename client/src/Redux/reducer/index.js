@@ -7,11 +7,13 @@ import {
   SORT_BY_HEALTH_SCORE,
   GET_DIETS,
   SET_PAGE,
+  CLEAN_DETAILS,
 } from "../actions/actiontypes";
 
 const initialState = {
   Recipes: [],
-  RecipeDetails: [],
+  RecipeDetails: {},
+  Loading: false,
   Diets: [],
   DarkTheme: false,
   SortBy: null,
@@ -19,27 +21,31 @@ const initialState = {
 };
 
 export default function Reducer(state = initialState, action) {
-  if (action === GET_ALL_RECIPES) {
+  if (action.type === GET_ALL_RECIPES) {
     return { ...state, Recipes: [...action.payload] };
   }
-  if (action === GET_RECIPES) {
+  if (action.type === GET_RECIPES) {
+    return { ...state, RecipeDetails: [...action.payload] };
   }
-  if (action === GET_DETAILS) {
-    return { ...state, Recipes: [...action.payload] };
+  if (action.type === GET_DETAILS) {
+    return { ...state, Recipes: action.payload, Loading: true };
   }
-  if (action === CHANGE_THEME) {
+  if (action.type === CHANGE_THEME) {
     return { ...state, DarkTheme: !state.DarkTheme };
   }
-  if (action === SORT_BY_ALPHABET) {
+  if (action.type === SORT_BY_ALPHABET) {
     return { ...state, SortBy: action.payload };
   }
-  if (action === SORT_BY_HEALTH_SCORE) {
+  if (action.type === SORT_BY_HEALTH_SCORE) {
     return { ...state, SortBy: action.payload };
   }
-  if (action === GET_DIETS) {
+  if (action.type === GET_DIETS) {
     return { ...state, Diets: action.payload };
   }
-  if (action === SET_PAGE) {
+  if (action.type === CLEAN_DETAILS) {
+    return { ...state, RecipeDetails: [] };
+  }
+  if (action.type === SET_PAGE) {
     if (action.payload === 1 || action.payload === -1) {
       return { ...state, Page: state.Page + action.payload };
     } else return { ...state, Page: action.payload };

@@ -6,7 +6,7 @@ import RecipeCard from "../Recipe Card/RecipeCard";
 
 function RecipeCards() {
   const Recipes = useSelector((state) => state.Recipes);
-
+  console.log(Recipes);
   return (
     <div>
       {Recipes.map((el) => {
@@ -15,7 +15,7 @@ function RecipeCards() {
             name={el.name}
             id={el.ID}
             image={el.image}
-            diet={el.diet}
+            diet={el.Diets}
           />
         );
       })}

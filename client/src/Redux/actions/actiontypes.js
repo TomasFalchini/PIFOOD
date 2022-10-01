@@ -6,3 +6,4 @@ export const SORT_BY_ALPHABET = "SORT_BY_ALPHABET";
 export const SORT_BY_HEALTH_SCORE = "SORT_BY_HEALTH_SCORE";
 export const GET_DIETS = "GET_DIETS";
 export const SET_PAGE = "SET_PAGE";
+export const CLEAN_DETAILS = "CLEAN_DETAILS";

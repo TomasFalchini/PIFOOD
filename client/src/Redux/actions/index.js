@@ -7,6 +7,7 @@ import {
   SORT_BY_HEALTH_SCORE,
   GET_DIETS,
   SET_PAGE,
+  CLEAN_DETAILS,
 } from "./actiontypes.js";
 
 export const setPage = (number) => {
@@ -16,13 +17,13 @@ export const setPage = (number) => {
   };
 };
 
-export const GetAllRecipes = () => {
-  return async (dispatch) => {
+export function GetAllRecipes() {
+  return async function (dispatch) {
     let response = await fetch("http://localhost:3001/recipes");
     let data = await response.json();
     dispatch({ type: GET_ALL_RECIPES, payload: data });
   };
-};
+}
 
 export const GetRecipes = (name) => {
   return async (dispatch) => {
@@ -65,5 +66,10 @@ export const SortByHelathScore = () => {
 export const ChangeTheme = () => {
   return {
     type: CHANGE_THEME,
+  };
+};
+export const CleanDetails = () => {
+  return {
+    type: CLEAN_DETAILS,
   };
 };
