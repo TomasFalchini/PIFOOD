@@ -1,0 +1,42 @@
+.NavBarContainerLight {
+  position: fixed;
+  right: 1rem;
+  top: 5vh;
+  width: 10vw;
+  height: 90vh;
+  background: rgba(1, 0, 16, 0.918);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  filter: drop-shadow(7px 7px 12px rgb(0, 0, 0));
+}
+
+h3 {
+  margin: 0;
+  font-family: "Playfair Display", serif;
+  color: rgb(255, 255, 255);
+  font-size: 1.3rem;
+  font-weight: 600;
+  font-style: italic;
+  text-shadow: 0.15rem 0.15rem rgba(145, 82, 40, 0.729);
+}
+
+.Icons {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+img.Banner {
+  width: 20rem;
+  height: 20rem;
+  z-index: -1;
+  position: fixed;
+  top: 0;
+  right: 0;
+}
+
+.DivMenu {
+  height: 12rem;
+  width: 100%;
+}
