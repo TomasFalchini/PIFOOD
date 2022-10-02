@@ -27,7 +27,9 @@ export function GetAllRecipes() {
 
 export const GetRecipes = (name) => {
   return async (dispatch) => {
-    let response = await fetch(`http://localhost:3001/recipes?name=${name}`);
+    let response = await fetch(
+      `http://localhost:3001/recipes?name=${name.input}`
+    );
     let data = await response.json();
     dispatch({ type: GET_RECIPES, payload: data });
   };

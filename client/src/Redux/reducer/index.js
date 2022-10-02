@@ -25,10 +25,11 @@ export default function Reducer(state = initialState, action) {
     return { ...state, Recipes: [...action.payload] };
   }
   if (action.type === GET_RECIPES) {
-    return { ...state, RecipeDetails: [...action.payload] };
+    console.log("entre");
+    return { ...state, Recipes: [...action.payload] };
   }
   if (action.type === GET_DETAILS) {
-    return { ...state, Recipes: action.payload, Loading: true };
+    return { ...state, RecipeDetails: action.payload, Loading: true };
   }
   if (action.type === CHANGE_THEME) {
     return { ...state, DarkTheme: !state.DarkTheme };
