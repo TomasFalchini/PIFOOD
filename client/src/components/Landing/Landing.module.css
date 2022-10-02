@@ -1,0 +1,54 @@
+.Landing {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 0px;
+  margin: 0px;
+  border: 0px;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(rgba(15, 23, 43, 0.9), rgba(15, 23, 43, 0.75)),
+    url(../../../src/images/bg-hero.jpg);
+}
+
+.innerLanding {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+body {
+  font-family: "Playfair Display", serif;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 2;
+  text-decoration: none;
+}
+
+h1,
+h3 {
+  margin: 0;
+  font-family: "Playfair Display", serif;
+  color: rgb(255, 255, 255);
+  font-size: 90px;
+  font-weight: 100;
+  font-style: italic;
+  transition: 1s linear;
+}
+
+h1 {
+  text-shadow: 0.5rem 0.3rem rgba(145, 82, 40, 0.729);
+}
+
+h3 {
+  letter-spacing: 0.3rem;
+  font-size: 1rem;
+  font-weight: 150;
+}
+
+h1:hover {
+  color: rgb(218, 100, 21);
+  text-shadow: 0.5rem 0.3rem rgba(255, 255, 255, 0.729);
+}
