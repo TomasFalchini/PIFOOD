@@ -24,6 +24,7 @@ const { createRecipe } = require("../controllers/createRecipe.js");
 
 recipesRoute.get("/", async (req, res, next) => {
   const { name } = req.query;
+
   if (name) {
     let recipes = await findRecipes(name);
     recipes.length > 0
