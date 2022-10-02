@@ -1,27 +1,22 @@
 //
 import React from "react";
-import { NavLink, Link, Routes, Route, Outlet } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { ChangeTheme } from "../../Redux/actions/index.js";
-import SearchBar from "../Search Bar/SearchBar.jsx";
-//Ver nav bar. Varios links a distintas rutas. Armar lo q va a tener. Va a tener el search bar, un botón a home, un botón a diets, un botón a create recipes, un botón de theme dark White.
+import { NavLink, Outlet } from "react-router-dom";
 
 import s from "./NavBar.module.css";
 import icon5 from "../../images/nav-icon5.png";
 import icon7 from "../../images/nav-icon7.png";
 import BANNER from "../../images/banner_bg.png";
+import one from "../../images/1.png";
+import two from "../../images/2.png";
+import three from "../../images/3.png";
 
 export default function NavBar() {
-  const dispatch = useDispatch();
-  const DarkTheme = useSelector((state) => state.DarkTheme);
-
-  function turnOn() {
-    dispatch(ChangeTheme());
-  }
-
   return (
     <div>
       <img className={s.Banner} src={BANNER} alt="" />
+      <img className={s.one} src={one} alt="" />
+      <img className={s.two} src={two} alt="" />
+      <img className={s.three} src={three} alt="" />
       <nav className={s.NavBarContainerLight}>
         <h3>FoodApp</h3>
         <div className={s.DivMenu}>
@@ -39,7 +34,6 @@ export default function NavBar() {
             <img className={s.Icons} src={icon5} alt="" /> CREATE
           </NavLink>
         </div>
-        {/* <button onClick={turnOn}>On / Off</button> */}
       </nav>
       <div className="content">
         <Outlet />

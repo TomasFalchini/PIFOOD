@@ -27,7 +27,7 @@ h3 {
   height: 1.5rem;
 }
 
-img.Banner {
+.Banner {
   width: 20rem;
   height: 20rem;
   z-index: -1;
@@ -39,4 +39,37 @@ img.Banner {
 .DivMenu {
   height: 12rem;
   width: 100%;
+}
+
+.one {
+  z-index: -1;
+  position: fixed;
+  top: 3rem;
+  left: 7rem;
+  height: 20vh;
+}
+
+.two {
+  z-index: -1;
+  position: fixed;
+  bottom: 3rem;
+  right: 7rem;
+  height: 20vh;
+}
+
+.three {
+  z-index: -1;
+  position: fixed;
+  bottom: 5rem;
+  left: -2rem;
+  height: 20vh;
+}
+
+::-webkit-scrollbar {
+  width: 0.5rem;
+  background: rgba(0, 0, 0, 0.972);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(145, 82, 40, 0.729);
 }

@@ -1,0 +1,12 @@
+.Foot {
+  display: flex;
+  justify-content: space-evenly;
+  position: fixed;
+  bottom: 0;
+  width: 99vw;
+  height: 5vh;
+}
+
+.Foot img {
+  width: 1.5rem;
+}

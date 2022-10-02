@@ -1,6 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import { ChangeTheme, GetRecipes } from "../../Redux/actions/index.js";
+import s from "./SearchBar.module.css";
+import lupa from "../../images/lupita.svg";
 
 /* Componente searchbar. Armar la lógica. Diseño bien simple. Un rectángulo bordes redondeados de input con un placeholder que sea un icono más una lupita, un botón de submit. Investigar funcionalidad de evento de teclado ctrl+k. Y para el enter. Q sea posición fixed para q me quede sobre la nav bar. O ver si puedo hacer renderizado condicional por ruta. Este va a tener un estado local para guardarme lo q escriba en el input y dsps mandárselo al back. */
 
@@ -24,26 +26,24 @@ export class SearchBar extends React.Component {
 
   render() {
     return (
-      <div
-        className={
-          this.props.DarkTheme ? "Search-Bar-Dark" : "Search-Bar-Light"
-        }
-      >
+      <div className={s.SearchBar}>
         <input
+          className={s.textInput}
           type="text"
-          placeholder="Search a recipe (lupita)"
+          placeholder="Search a recipe..."
           value={this.state.input}
           onChange={(e) => {
             this.handleChange(e);
           }}
         />
-        <button
+        <label
+          className={s.submit}
           onClick={(e) => {
             this.handleSearch(e);
           }}
         >
-          Search
-        </button>
+          <img className={s.lupa} src={lupa} alt="" />
+        </label>
       </div>
     );
   }

@@ -2,6 +2,7 @@
 import React from "react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import s from "./Filters.module.css";
 
 function Filters() {
   const diets = useSelector((state) => state.Diets);
@@ -10,7 +11,7 @@ function Filters() {
   function handleOnClick(e) {}
 
   return (
-    <div>
+    <div className={s.filters}>
       {
         <select>
           <option selected={true} value="A-z">
