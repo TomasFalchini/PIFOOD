@@ -8,6 +8,7 @@ import RecipeDetails from "./components/Recipe Details/RecipeDetails.jsx";
 import Footer from "./components/Footer/Footer.jsx";
 import CreateRecipe from "./components/Create Recipe/CreateRecipe.jsx";
 import Filters from "./components/Filters/Filters.jsx";
+import SearchBar from "./components/Search Bar/SearchBar";
 
 //importar todos los componentes para armar las rutas de renderizado.
 
@@ -20,6 +21,7 @@ function App() {
           path="recipes"
           element={
             <>
+              <SearchBar />
               <Filters />
               <RecipesCards />
               <Footer />
