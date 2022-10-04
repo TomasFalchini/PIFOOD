@@ -8,6 +8,7 @@ import {
   GET_DIETS,
   SET_PAGE,
   CLEAN_DETAILS,
+  FILTER_BY_DIET,
 } from "./actiontypes.js";
 
 export const setPage = (number) => {
@@ -51,17 +52,30 @@ export const GetDiets = () => {
   };
 };
 
-export const SortByAlphabet = () => {
+export const SortByAlphabet = (sort) => {
   return {
     type: SORT_BY_ALPHABET,
-    payload: "Alphabet",
+    payload: sort,
   };
 };
 
-export const SortByHelathScore = () => {
+export const SortByHelathScore = (sort, alph) => {
   return {
     type: SORT_BY_HEALTH_SCORE,
-    payload: "Health Score",
+    payload: [sort, alph],
+  };
+};
+
+export const FilterByDiets = (diet) => {
+  return async (dispatch) => {
+    let response = await fetch(
+      `http://localhost:3001/recipes/filter?diet=${diet}`
+    );
+    let data = await response.json();
+    dispatch({
+      type: FILTER_BY_DIET,
+      payload: data,
+    });
   };
 };
 

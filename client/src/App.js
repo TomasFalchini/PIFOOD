@@ -22,7 +22,6 @@ function App() {
           element={
             <>
               <SearchBar />
-              <Filters />
               <RecipesCards />
               <Footer />
             </>
