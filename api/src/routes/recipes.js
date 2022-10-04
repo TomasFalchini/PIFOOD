@@ -35,6 +35,7 @@ recipesRoute.get("/", async (req, res, next) => {
 
 recipesRoute.get("/", async (req, res, next) => {
   preChargeDiets();
+  console.log("entre");
   let recipes = await Recipe.findAll({
     include: Diet,
   });
@@ -55,6 +56,23 @@ recipesRoute.get("/", async (req, res, next) => {
   return res.status(200).send(recipes);
 });
 
+recipesRoute.get("/filter", async (req, res, next) => {
+  const { diet } = req.query;
+
+  let recipes = await Recipe.findAll({
+    include: {
+      model: Diet,
+      where: {
+        name: {
+          [Op.iLike]: `%${diet}%`,
+        },
+      },
+    },
+  });
+
+  return res.status(200).send(recipes);
+});
+
 recipesRoute.get("/:idReceta", async (req, res, next) => {
   const { idReceta } = req.params;
   try {
@@ -70,19 +88,20 @@ recipesRoute.get("/:idReceta", async (req, res, next) => {
 });
 
 recipesRoute.post("/create", async (req, res, next) => {
-  const { name, resume, health_score, steps, image, diet } = req.body;
+  const { name, resume, healthScore, steps, image, diets } = req.body;
+  let concatSteps = steps?.join("***");
   try {
     let recipe = await createRecipe(
       name,
       resume,
-      health_score,
-      steps,
+      healthScore,
+      concatSteps,
       image,
-      diet
+      diets
     );
     recipe
-      ? res.status(200).send("Se ha creado la receta con exito!")
-      : res.status(500).send("Algo ha fallado");
+      ? res.status(200).send({ message: "Se ha creado la receta con exito!" })
+      : res.status(500).send({ message: "Algo ha fallado" });
   } catch (err) {
     res.status(404).send(err.message);
   }
