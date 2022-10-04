@@ -5,11 +5,12 @@
   border: none;
   background-color: white;
   display: flex;
-  min-width: 25vw;
-  min-height: 12.5vw;
+  width: 25vw;
+  height: 12.5vw;
 }
 
 .Text {
+  position: relative;
   text-align: right;
   transition: all 1s;
   width: 50%;
@@ -20,6 +21,30 @@
   background-color: #2c3e50d7;
 }
 
+.hidden {
+  color: white;
+  transition: all 1s;
+  font-size: 1rem;
+  display: none;
+}
+
+.Text:hover h4 {
+  color: #2c3e5035;
+}
+
+.Text:hover p {
+  color: #2c3e5025;
+}
+
+.Text:hover span {
+  display: inline;
+  position: absolute;
+  color: white;
+  z-index: 25;
+  top: 4rem;
+  left: 2.5rem;
+}
+
 .Text h4 {
   color: #2f3640;
   margin: 0.5rem;
@@ -28,6 +53,7 @@
   font-style: italic;
   font-size: 1rem;
   line-height: 1.2rem;
+  transition: all 1s;
 }
 .Text p {
   margin: 0.5rem;
@@ -36,6 +62,7 @@
   line-height: 1rem;
   font-family: "Open Sans", Arial, sans-serif;
   color: #718093;
+  transition: all 1s;
 }
 
 .photo {

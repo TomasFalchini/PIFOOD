@@ -9,7 +9,7 @@ import s from "./Landing.module.css";
 
 export class Landing extends React.Component {
   componentDidMount() {
-    this.props.GetAllRecipes();
+    this.props.GetAllRecipes().then(() => this.props.GetDiets());
   }
 
   render() {

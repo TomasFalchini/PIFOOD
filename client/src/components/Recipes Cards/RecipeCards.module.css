@@ -1,9 +1,9 @@
 .ContainerOfCards {
-  margin-top: 10vh;
+  margin-top: 11vh;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(25vw, 1fr));
   width: 76.5vw;
-  margin-left: 4rem;
+  margin-left: 6rem;
   column-gap: 0.5vw;
   row-gap: 1rem;
 }

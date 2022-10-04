@@ -1,44 +1,85 @@
 //
 import React from "react";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import {
+  GetAllRecipes,
+  SortByAlphabet,
+  SortByHelathScore,
+  FilterByDiets,
+} from "../../Redux/actions/index";
 import s from "./Filters.module.css";
 
 function Filters() {
-  const diets = useSelector((state) => state.Diets);
-  const [states, setStates] = useState({});
+  const [states, setStates] = useState({
+    alphabetic: "",
+    health_score: "",
+    diets: "All diets", //array
+  });
+  const dispatch = useDispatch();
 
-  function handleOnClick(e) {}
+  function handleReset(e) {
+    e.preventDefault();
+    dispatch(GetAllRecipes());
+    setStates({
+      alphabetic: "",
+      health_score: "",
+      diets: "All diets", //array
+    });
+  }
+
+  function handleChangeSortA(e) {
+    e.preventDefault();
+    if (e.target.value !== "hide") {
+      setStates({ ...states, alphabetic: e.target.value });
+      dispatch(SortByAlphabet(e.target.value));
+    }
+  }
+
+  function handleChangeSortB(e) {
+    e.preventDefault();
+    if (e.target.value !== "hide") {
+      setStates({ ...states, health_score: e.target.value });
+      dispatch(SortByHelathScore(e.target.value, states.alphabetic));
+    }
+  }
+
+  function filterByDiets(e) {
+    e.preventDefault();
+    setStates({ ...states, diets: e.target.value });
+    if (e.target.value === "All diets") return dispatch(GetAllRecipes()); //ver como combinar esto con todos los demas ordenamientos
+    dispatch(FilterByDiets(e.target.value));
+  }
 
   return (
     <div className={s.filters}>
+      <select value={states.alphabetic} onChange={handleChangeSortA}>
+        <option value="hide">Name</option>
+        <option value="A-z">A-z</option>
+        <option value="Z-a">Z-a</option>
+      </select>
+
+      <select value={states.health_score} onChange={handleChangeSortB}>
+        <option value="hide">Health Score</option>
+        <option value="Low">Lower</option>
+        <option value="High">Higher</option>
+      </select>
+
       {
-        <select>
-          <option selected={true} value="A-z">
-            A-z
-          </option>
-          <option value="Z-a">Z-a</option>
-        </select>
-        /*  Botones/Opciones para filtrar por por tipo de dieta
-[ ] Botones/Opciones para ordenar tanto ascendentemente como descendentemente las recetas por orden alfabético y por health score (nivel de comida saludable). 
-boton de reseteo de filtros
-boton de reseteo de busqueda
-*/
-      }
-      {
-        <select>
-          <option selected={true}>Lower Health Score</option>
-          <option>Higher Health Score</option>
+        <select value={states.diets} onChange={filterByDiets}>
+          <option value="All diets">All diets</option>
+          <option value="gluten free">Gluten free</option>
+          <option value="dairy free">dairy free</option>
+          <option value="lacto ovo vegetarian">lacto ovo vegetarian</option>
+          <option value="vegan">vegan</option>
+          <option value="paleolithic">paleolithic</option>
+          <option value="primal">primal</option>
+          <option value="whole 30">whole 30</option>
+          <option value="pescatarian">pescatarian</option>
+          <option value="fodmap friendly">fodmap friendly</option>
         </select>
       }
-      {
-        <select multiple={true}>
-          {diets.map((el) => {
-            return <option value={el}>{el}</option>;
-          })}
-        </select>
-      }
-      <button onClick={handleOnClick}>RESET ALL</button>
+      <button onClick={handleReset}>RESET ALL</button>
     </div>
   );
 }

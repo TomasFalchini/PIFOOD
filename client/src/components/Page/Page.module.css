@@ -1,0 +1,7 @@
+.Container {
+  position: fixed;
+  display: flex;
+  justify-content: space-evenly;
+  bottom: 2rem;
+  background-color: black;
+}
