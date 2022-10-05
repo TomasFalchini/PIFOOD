@@ -14,30 +14,24 @@ import Page from "../Page/Page.jsx";
 function RecipeCards() {
   let Recipes = useSelector((state) => state.Recipes);
   let Diets = useSelector((state) => state.Diets);
+  let actualPage = useSelector((state) => state.Page);
 
   let dispatch = useDispatch();
-  const [loading, setLoading] = useState(false);
+
+  console.log(actualPage);
 
   useEffect(() => {
-    console.log(Diets);
     if (!Diets[0]) {
+      console.log("entre aca");
       dispatch(GetAllRecipes());
       dispatch(GetDiets());
     }
-  }, [dispatch, Diets]);
-
-  useEffect(() => {
-    console.log("entre aca");
-    setLoading(false);
-    if (Recipes[0]) {
-      setLoading(true);
-    }
-  }, [Recipes]);
+  }, [Diets, actualPage]);
 
   return (
     <div className={s.ContainerOfCards}>
       <Filters />
-      {/* {loading ? null : <span>Loading...</span>} */}
+      {Recipes[0] ? null : <span>Loading...</span>}
       <img className={s.cooking} src={cooking} alt="" />
       {Recipes.map((el) => {
         return (
@@ -49,8 +43,8 @@ function RecipeCards() {
             diet={el.Diets}
           />
         );
-      })}
-      <Page />
+      }).slice(9 * (actualPage - 1), 9 * actualPage)}
+      <Page quantity={Recipes.length} />
     </div>
   );
 }

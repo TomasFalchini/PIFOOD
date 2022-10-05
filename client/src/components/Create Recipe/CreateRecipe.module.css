@@ -52,7 +52,7 @@
   margin-top: 1rem;
 }
 
-::placeholder {
+.boxcontainer ::placeholder {
   color: rgba(0, 0, 0, 0.379);
   text-align: center;
 }
