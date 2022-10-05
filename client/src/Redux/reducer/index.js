@@ -14,14 +14,12 @@ import {
 const initialState = {
   Recipes: [],
   RecipeDetails: {},
-  Loading: false,
   Diets: [],
-  DarkTheme: false,
-
   Page: 1,
 };
 
 export default function Reducer(state = initialState, action) {
+  console.log("entre al reducer");
   if (action.type === GET_ALL_RECIPES) {
     return { ...state, Recipes: [...action.payload] };
   }
@@ -29,7 +27,7 @@ export default function Reducer(state = initialState, action) {
     return { ...state, Recipes: [...action.payload] };
   }
   if (action.type === GET_DETAILS) {
-    return { ...state, RecipeDetails: action.payload, Loading: true };
+    return { ...state, RecipeDetails: action.payload };
   }
   if (action.type === CHANGE_THEME) {
     return { ...state, DarkTheme: !state.DarkTheme };
@@ -86,9 +84,7 @@ export default function Reducer(state = initialState, action) {
     return { ...state, RecipeDetails: [] };
   }
   if (action.type === SET_PAGE) {
-    if (action.payload === 1 || action.payload === -1) {
-      return { ...state, Page: state.Page + action.payload };
-    } else return { ...state, Page: action.payload };
+    return { ...state, Page: action.payload };
   }
   if (action.type === FILTER_BY_DIET) {
     return { ...state, Recipes: action.payload };

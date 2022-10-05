@@ -19,6 +19,7 @@ export const setPage = (number) => {
 };
 
 export function GetAllRecipes() {
+  
   return async function (dispatch) {
     let response = await fetch("http://localhost:3001/recipes");
     let data = await response.json();
