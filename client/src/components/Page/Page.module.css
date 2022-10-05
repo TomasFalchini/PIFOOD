@@ -1,7 +1,11 @@
 .Container {
   position: fixed;
+  bottom: 5rem;
+  z-index: 50;
   display: flex;
   justify-content: space-evenly;
-  bottom: 2rem;
-  background-color: black;
+}
+
+.Container button {
+  display: block;
 }

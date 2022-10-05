@@ -1,42 +1,59 @@
 import React from "react";
-import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useState } from "react";
+import { setPage } from "../../Redux/actions/index.js";
+import { useDispatch } from "react-redux";
+
 import s from "./Page.module.css";
+import { useEffect } from "react";
 
-export default function Pages() {
-  const Recipes = useSelector((state) => state.Recipes);
-  const [quantity, setQuantity] = useState(Math.ceil(Recipes.length / 9));
+/* 
+quiero renderizar de 9 en 9, 
+el estado quantity va a estar en Cards y se lo paso por props a este. en realidad ni siquiera es un estado, sino q es Recipes.length que tengo en RecipeCards.
+esa quantity el math.ceil es la cantidad de paginas q tengo q poder mostrar, con los botones de prev y de next. (estos ultimos dos con renderizado condicional dependiendo de la pagina en la q estoy.)
+un estado en este componente q me vaya diciendo cual es la pagina actual. eso se lo tengo q pasar al componente padre para q me vaya mostrando cuales renderizar (del 9*(actual-1) al 9*actual -1 )
+
+*/
+
+export default function Pages({ quantity }) {
   const [actual, setActual] = useState(1);
-
+  const dispatch = useDispatch();
   useEffect(() => {
-    setQuantity(Math.ceil(Recipes.length / 9));
-  }, [Recipes.length]);
+    setActual(1);
+    dispatch(setPage(actual));
+  }, [quantity]);
 
   function handleOnClick(e) {
-    setActual(e.target.value);
+    setActual(Number(e.target.value));
+    dispatch(setPage(Number(e.target.value)));
   }
   function handlePrevious(e) {
     setActual((state) => state - 1);
+    dispatch(setPage(actual - 1));
   }
   function handleNext(e) {
     setActual((state) => state + 1);
+    dispatch(setPage(actual + 1));
   }
 
   function setButtons(q) {
     let array = [];
     for (let i = 1; i <= q; i++) {
-      array.push(<button onClick={handleOnClick}>i</button>);
+      array.push(
+        <button value={i} onClick={handleOnClick}>
+          {i}
+        </button>
+      );
     }
     return array;
   }
 
   return (
     <div className={s.Container}>
-      {actual === 1 && quantity > 1 ? null : (
-        <button onClick={handlePrevious}>Prev</button>
+      {actual === 1 ? null : <button onClick={handlePrevious}>Prev</button>}
+      {quantity > 8 ? setButtons(Math.ceil(quantity / 9)) : null}
+      {actual === Math.ceil(quantity / 9) ? null : (
+        <button onClick={handleNext}>Next</button>
       )}
-      {quantity > 1 ? setButtons(quantity) : null}
-      {actual === quantity ? null : <button onClick={handleNext}>Next</button>}
     </div>
   );
 }
