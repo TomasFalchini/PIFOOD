@@ -10,9 +10,11 @@ import cooking from "../../images/undraw_cooking_re_g99p (1).svg";
 import { useEffect, useState } from "react";
 import { GetAllRecipes, GetDiets } from "../../Redux/actions/index.js";
 import Page from "../Page/Page.jsx";
+import RecipeNotFound from "../Recipe Not Found (404)/RecipeNotFound";
 
 function RecipeCards() {
   let Recipes = useSelector((state) => state.Recipes);
+  console.log(Recipes.length);
   let Diets = useSelector((state) => state.Diets);
   let actualPage = useSelector((state) => state.Page);
 
@@ -26,7 +28,7 @@ function RecipeCards() {
       dispatch(GetAllRecipes());
       dispatch(GetDiets());
     }
-  }, [Diets, actualPage]);
+  }, [Diets]);
 
   return (
     <div className={s.ContainerOfCards}>
@@ -34,6 +36,13 @@ function RecipeCards() {
       {Recipes[0] ? null : <span>Loading...</span>}
       <img className={s.cooking} src={cooking} alt="" />
       {Recipes.map((el) => {
+        if (el.name === "Recipe Not Found") {
+          return (
+            <div>
+              <RecipeNotFound />
+            </div>
+          );
+        }
         return (
           <RecipeCard
             key={el.ID}

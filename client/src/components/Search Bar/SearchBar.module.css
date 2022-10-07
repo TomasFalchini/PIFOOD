@@ -5,10 +5,10 @@
   justify-content: center;
   align-items: center;
   position: fixed;
-  top: 2rem;
+  top: 1.8rem;
   left: 50%;
   transform: translate(-50%, -50%);
-  min-height: 3rem;
+  min-height: 2.5rem;
   padding: 0.25rem;
   border-radius: 1.5rem;
 }
@@ -41,14 +41,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 2.5rem;
-  width: 2.5rem;
+  height: 2rem;
+  width: 2rem;
   transition: all 1s;
   border-radius: 50%;
-}
-
-.submit button {
-  display: none;
 }
 
 .lupa {

@@ -1,0 +1,25 @@
+.ContainerDetails .Loading {
+  font-size: 500px;
+}
+
+.ContainerDetails button {
+  display: block;
+}
+
+.similCard {
+  margin-top: 3.5rem;
+  margin-left: 2rem;
+  width: 80%;
+  display: flex;
+  margin-bottom: 2rem;
+}
+
+.similCard img {
+  width: 18rem;
+  height: 18rem;
+  border-radius: 2rem;
+}
+
+.similCard h2 {
+  width: 45%;
+}

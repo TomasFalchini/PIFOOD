@@ -24,12 +24,13 @@ const { createRecipe } = require("../controllers/createRecipe.js");
 
 recipesRoute.get("/", async (req, res, next) => {
   const { name } = req.query;
+  console.log(name);
 
   if (name) {
     let recipes = await findRecipes(name);
     recipes.length > 0
       ? res.status(200).send(recipes)
-      : res.status(404).send("No existe");
+      : res.status(404).send([{ name: "Recipe Not Found" }]);
   } else next();
 });
 
@@ -81,9 +82,9 @@ recipesRoute.get("/:idReceta", async (req, res, next) => {
     });
     recipe
       ? res.status(200).send(recipe)
-      : res.status(404).send("Recipe Not Found");
+      : res.status(404).send("Entre aca bobo");
   } catch (err) {
-    res.status(404).send("Recipe Not Found");
+    res.status(404).send("Entre aca bobin");
   }
 });
 

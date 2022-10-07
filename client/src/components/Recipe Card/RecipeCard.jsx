@@ -7,12 +7,19 @@ function RecipeCard({ name, id, image, diet }) {
   const styles = {
     textDecoration: "none",
   };
+  console.log(diet);
   return (
     <div className={s.Card}>
       <div className={s.Text}>
         <Link style={styles} to={`/home/${id}`}>
-          <h4>{name.toUpperCase()}</h4>
-          <p>{diet.map((el) => el.name.toUpperCase())}</p>
+          <div>
+            <h4>{name.toUpperCase()}</h4>
+            <div>
+              {diet?.map((el) => (
+                <p>{el.name.toUpperCase()}</p>
+              ))}
+            </div>
+          </div>
           <span className={s.hidden}>SEE DETAILS</span>
         </Link>
       </div>

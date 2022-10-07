@@ -2,40 +2,57 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { GetDetails, CleanDetails } from "../../Redux/actions/index.js";
+import { useNavigate } from "react-router-dom";
+import { GetDetails } from "../../Redux/actions/index.js";
+import s from "./RecipeDetails.module.css";
 
 function RecipeDetails() {
   const dispatch = useDispatch();
   const { id } = useParams();
+  let navigate = useNavigate();
 
   const Recipe = useSelector((state) => state.RecipeDetails);
-  const Loading = useSelector((state) => state.Loading);
-  const [loaded, setLoaded] = useState(Loading);
+
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    if (!Recipe.name) {
-      dispatch(GetDetails(id));
-      setLoaded(Loading);
+    setLoaded(false);
+    async function LoadDetails() {
+      await dispatch(GetDetails(id));
+      setLoaded(true);
     }
-  }, [loaded]);
+
+    LoadDetails();
+  }, []);
 
   console.log(Recipe.name);
 
   return (
-    <div className="Details">
-      {Recipe.name ? (
+    <div className={s.ContainerDetails}>
+      {loaded ? (
         <div>
-          <h3>{Recipe.name} Hola juan carlos</h3>
-          <img src={Recipe.image} alt={Recipe.image} />
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              navigate(-1);
+            }}
+          >
+            Back Home
+          </button>
+          <div className={s.similCard}>
+            <h2>{Recipe.name}</h2>
+            {Recipe.Diets?.map((el) => (
+              <span>{el.name}</span>
+            ))}
+            <img src={Recipe.image} alt={Recipe.image} />
+          </div>
           <p>{Recipe.resume}</p>
-          <span>{Recipe.health_score}</span>
-          {Recipe.Diets?.map((el) => (
-            <span>{el.name}</span>
-          ))}
+          <p>{Recipe.health_score}</p>
+
           <p>{Recipe.steps}</p>
         </div>
       ) : (
-        <p>Loading...</p>
+        <p className={s.Loading}>Loading...</p>
       )}
     </div>
   );

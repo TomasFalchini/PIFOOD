@@ -17,6 +17,7 @@ un estado en este componente q me vaya diciendo cual es la pagina actual. eso se
 export default function Pages({ quantity }) {
   const [actual, setActual] = useState(1);
   const dispatch = useDispatch();
+
   useEffect(() => {
     setActual(1);
     dispatch(setPage(actual));
@@ -49,10 +50,16 @@ export default function Pages({ quantity }) {
 
   return (
     <div className={s.Container}>
-      {actual === 1 ? null : <button onClick={handlePrevious}>Prev</button>}
+      {actual === 1 ? null : (
+        <button className={s.prevornext} onClick={handlePrevious}>
+          Prev
+        </button>
+      )}
       {quantity > 8 ? setButtons(Math.ceil(quantity / 9)) : null}
       {actual === Math.ceil(quantity / 9) ? null : (
-        <button onClick={handleNext}>Next</button>
+        <button className={s.prevornext} onClick={handleNext}>
+          Next
+        </button>
       )}
     </div>
   );

@@ -23,7 +23,7 @@ body {
   font-family: "Playfair Display", serif;
   font-size: 1rem;
   font-weight: 600;
-  line-height: 2;
+
   text-decoration: none;
 }
 
@@ -38,17 +38,17 @@ h3 {
   transition: 1s linear;
 }
 
-h1 {
+.Landing h1 {
   text-shadow: 0.5rem 0.3rem rgba(145, 82, 40, 0.729);
 }
 
-h3 {
+.Landing h3 {
   letter-spacing: 0.3rem;
   font-size: 1rem;
   font-weight: 150;
 }
 
-h1:hover {
+.Landing h1:hover {
   color: rgb(218, 100, 21);
   text-shadow: 0.5rem 0.3rem rgba(255, 255, 255, 0.729);
 }

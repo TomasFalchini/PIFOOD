@@ -4,6 +4,8 @@ import { useDispatch } from "react-redux";
 import { GetAllRecipes } from "../../Redux/actions/index";
 import s from "./CreateRecipe.module.css";
 import chef from "../../images/undraw_chef_cu-0-r.svg";
+import { useNavigate } from "react-router-dom";
+import RecipeExample from "../RecipeExample/RecipeExample.jsx";
 
 function CreateRecipe() {
   const dispatch = useDispatch();
@@ -16,18 +18,21 @@ function CreateRecipe() {
   });
   const [steps, setSteps] = useState([]);
   const [diets, setDiets] = useState([]);
-
+  const navigate = useNavigate();
   const handleOnChange = (e) => {
+    console.log(e.target.name);
     setInputs({ ...inputs, [e.target.name]: e.target.value });
   };
 
   const addDiets = (e) => {
-    setDiets((state) => [...state, e.target.value]);
+    if (e.target.value === "hiden") return;
+    let diet = new Set([...diets, e.target.value]);
+    setDiets((state) => [...diet]);
   };
 
   const addSteps = (e) => {
     setSteps((steps) => [...steps, inputs.step]);
-    e.target.value = "";
+    setInputs({ ...inputs, step: "" });
   };
 
   const handleOnSubmit = (e) => {
@@ -49,13 +54,10 @@ function CreateRecipe() {
       .then((res) => res.json())
       .then((response) => {
         dispatch(GetAllRecipes());
+        alert(response.message);
+        navigate(-1);
       });
   };
-
-  const regExpLettersOnly = /^[a-zA-Z\s]*$/gm;
-  const regExpLettersOnly1 = /^[a-zA-Z\s]*$/gm;
-  const regExpLettersAndNumbers = /^[a-zA-Z0-9./,;?:\s]*$/gm;
-  const regExpLettersAndNumbers2 = /^[a-zA-Z0-9./,;?!_:\s]*$/gm;
 
   return (
     <div className={s.boxcontainer}>
@@ -71,7 +73,7 @@ function CreateRecipe() {
             handleOnChange(e);
           }}
         />
-        <label for="recipename" className={s.form__label}>
+        <label htmlFor="recipename" className={s.form__label}>
           Recipe Name
         </label>
         <input
@@ -82,7 +84,7 @@ function CreateRecipe() {
           name="resume"
           value={inputs.resume}
         />
-        <label for="resume" className={s.form__label}>
+        <label htmlFor="resume" className={s.form__label}>
           Recipe Resume
         </label>
 
@@ -92,6 +94,7 @@ function CreateRecipe() {
           min="0"
           max="100"
           step="1"
+          name="healthScore"
           onChange={handleOnChange}
           value={inputs.healthScore}
         />
@@ -104,7 +107,7 @@ function CreateRecipe() {
           placeholder="Add the next Step"
           value={inputs.step}
         />
-        <label for="step" className={s.form__label}>
+        <label htmlFor="step" className={s.form__label}>
           Add the next Step
         </label>
 
@@ -116,7 +119,7 @@ function CreateRecipe() {
           name="image"
           value={inputs.image}
         />
-        <label for="image" className={s.form__label}>
+        <label htmlFor="image" className={s.form__label}>
           Image URL
         </label>
 
@@ -143,35 +146,87 @@ function CreateRecipe() {
         Add step
       </button>
       <div className={s.RecipeExample}>
-        {regExpLettersOnly.test(inputs.name) ? null : (
-          <span>Invalid format</span>
-        )}
-        {regExpLettersOnly1.test(inputs.resume) ? null : (
-          <span>Invalid format</span>
-        )}
-        {regExpLettersAndNumbers.test(inputs.step) ? null : (
-          <span>Invalid format</span>
-        )}
-        {steps.length > 0 ? (
-          <div>
-            {steps.map((el) => {
-              return <p>{el}</p>;
-            })}
-          </div>
-        ) : null}
-        {regExpLettersAndNumbers2.test(inputs.image) ? null : (
-          <span>Invalid format</span>
-        )}
-        {diets.length > 0 ? (
-          <div>
-            {diets.map((el) => {
-              return <p>{el}</p>;
-            })}
-          </div>
-        ) : null}
+        <RecipeExample
+          resume={Validate(inputs).resume}
+          name={Validate(inputs).name}
+          healthScore={inputs.healthScore}
+          image={Validate(inputs).image}
+          steps={steps}
+          diets={diets}
+          step={Validate(inputs).step}
+        />
       </div>
     </div>
   );
+}
+
+function Validate(state) {
+  const regExpLettersOnly = /^[a-zA-Z\s]*$/gm;
+  const regExpLettersOnly1 = /^[a-zA-Z\s]*$/gm;
+  const regExpLettersAndNumbers = /^[a-zA-Z0-9./,;?:\s]*$/gm;
+  const regExpLettersAndNumbers2 = /^[a-zA-Z0-9./,;?!_:\s?=!-]*$/gm;
+
+  const example = {
+    name: regExpLettersOnly.test(state.name) ? state.name : "Invalid format",
+    resume: regExpLettersOnly1.test(state.resume)
+      ? state.resume
+      : "Invalid format",
+    image: regExpLettersAndNumbers2.test(state.image)
+      ? state.image
+      : "Invalid URL",
+    step: regExpLettersAndNumbers.test(state.step)
+      ? state.step
+      : "Step not valid",
+  };
+
+  return example;
+  /*  <div className={s.RecipeExample}>
+    {regExpLettersOnly.test(inputs.name) ? (
+      <span>{inputs.name || "Recipe Example"}</span>
+    ) : (
+      <span className={s.Invalid}>Invalid format</span>
+    )}
+    {regExpLettersOnly1.test(inputs.resume) ? (
+      <span>
+        {inputs.resume ||
+          "Recipe Resume Example; LLorem ipsum dolor sit amet consectetur adipisicing elit. Tempore nostrum quas molestiae modi, est qui error recusandae amet aliquid reiciendis officia dolorem expedita nisi totam ducimus neque eos provident dolores? "}
+      </span>
+    ) : (
+      <span className={s.Invalid}>Invalid format</span>
+    )}
+
+    {steps.length > 0 ? (
+      <div className={s.steps}>
+        {steps.map((el) => {
+          return <p>{el}</p>;
+        })}
+      </div>
+    ) : null}
+    {regExpLettersAndNumbers.test(inputs.step) ? (
+      <span className={s.stepsi}>{inputs.step}</span>
+    ) : (
+      <span className={s.Invalid}>Invalid format</span>
+    )}
+    {regExpLettersAndNumbers2.test(inputs.image) ? (
+      <img
+        className={s.imgexample}
+        src={
+          inputs.image ||
+          "https://media.istockphoto.com/photos/fried-pork-and-vegetables-on-white-background-picture-id1190330112?k=20&m=1190330112&s=612x612&w=0&h=_TrmthJupdqYmMU-NC-es85TEvaBJsynDS383hqiAvM="
+        }
+        alt=""
+      />
+    ) : (
+      <span>Invalid format</span>
+    )}
+    {diets.length > 0 ? (
+      <div>
+        {diets.map((el) => {
+          return <p>{el}</p>;
+        })}
+      </div>
+    ) : null}
+  </div>; */
 }
 
 export default CreateRecipe;

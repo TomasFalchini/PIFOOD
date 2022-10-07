@@ -14,7 +14,6 @@
   text-align: right;
   transition: all 1s;
   width: 50%;
-  font-size: 5px;
 }
 
 .Text:hover {
@@ -26,6 +25,18 @@
   transition: all 1s;
   font-size: 1rem;
   display: none;
+}
+.Text > * > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.Text > * > div > div {
+  margin-bottom: 1rem;
 }
 
 .Text:hover h4 {
@@ -47,8 +58,10 @@
 
 .Text h4 {
   color: #2f3640;
-  margin: 0.5rem;
+  margin-left: 0.2rem;
   margin-top: 1rem;
+
+  width: 10.3rem;
   font-family: "DM Serif Display", serif;
   font-style: italic;
   font-size: 1rem;
@@ -56,13 +69,15 @@
   transition: all 1s;
 }
 .Text p {
-  margin: 0.5rem;
-  margin-top: 2rem;
-  font-size: 0.8rem;
-  line-height: 1rem;
+  font-size: 0.7rem;
+
   font-family: "Open Sans", Arial, sans-serif;
   color: #718093;
   transition: all 1s;
+  display: inline-block;
+  max-width: 10rem;
+  margin-left: 0.2rem;
+  margin-right: 0.2rem;
 }
 
 .photo {

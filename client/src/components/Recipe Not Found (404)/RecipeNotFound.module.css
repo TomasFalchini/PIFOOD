@@ -1,0 +1,34 @@
+.NotFound {
+  text-align: center;
+  position: fixed;
+  left: 35%;
+  top: 12%;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 23rem;
+  height: 10rem;
+}
+
+.NotFound h1 {
+  color: rgba(105, 96, 96, 0.822);
+  margin: 0;
+  padding: 0;
+  height: 9rem;
+  display: inline;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 10rem;
+}
+
+.NotFound img {
+  transform: translateX(0.5rem);
+  margin-bottom: 1rem;
+  width: 10rem;
+  height: 10rem;
+}
+
+.NotFound p {
+  width: 23rem;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}

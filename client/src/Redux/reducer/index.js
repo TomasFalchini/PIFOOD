@@ -24,9 +24,11 @@ export default function Reducer(state = initialState, action) {
     return { ...state, Recipes: [...action.payload] };
   }
   if (action.type === GET_RECIPES) {
+    console.log(action.payload);
     return { ...state, Recipes: [...action.payload] };
   }
   if (action.type === GET_DETAILS) {
+    console.log("hago esto 3");
     return { ...state, RecipeDetails: action.payload };
   }
   if (action.type === CHANGE_THEME) {
