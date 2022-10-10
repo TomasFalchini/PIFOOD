@@ -1,15 +1,24 @@
 const { Op } = require("sequelize");
 const { Recipe, Diet } = require("../db.js");
 
-async function createRecipe(name, resume, health_score, steps, image, diet) {
+async function createRecipe(
+  name,
+  resume,
+  health_score,
+  steps,
+  image,
+  diet,
+  created = false
+) {
   let recipe = await Recipe.create({
     name: name,
     resume: resume,
     health_score: health_score,
     steps: steps,
     image: image,
+    created: created,
   });
-  if (diet.length > 0) {
+  if (diet?.length > 0) {
     let diets = await Diet.findAll({
       where: {
         name: {

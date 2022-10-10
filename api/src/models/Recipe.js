@@ -29,6 +29,10 @@ module.exports = (sequelize) => {
       image: {
         type: DataTypes.STRING,
       },
+      created: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
     },
     {
       freezeTableName: true,

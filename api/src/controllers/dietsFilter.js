@@ -2,14 +2,16 @@ const { Recipe, Diet } = require("../db.js");
 const { Op } = require("sequelize");
 
 module.exports = {
-  findRecipes: async (query) => {
+  dietsFilter: async function dietsFilter(diet) {
     let recipes = await Recipe.findAll({
-      where: {
-        name: {
-          [Op.iLike]: `%${query}%`,
+      include: {
+        model: Diet,
+        where: {
+          name: {
+            [Op.iLike]: `%${diet}%`,
+          },
         },
       },
-      include: Diet,
     });
     return recipes;
   },
