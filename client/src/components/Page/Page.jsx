@@ -19,8 +19,9 @@ export default function Pages({ quantity }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    console.log("entre");
     setActual(1);
-    dispatch(setPage(actual));
+    dispatch(setPage(1));
   }, [quantity]);
 
   function handleOnClick(e) {
@@ -40,7 +41,11 @@ export default function Pages({ quantity }) {
     let array = [];
     for (let i = 1; i <= q; i++) {
       array.push(
-        <button value={i} onClick={handleOnClick}>
+        <button
+          className={actual === i ? s.active : null}
+          value={i}
+          onClick={handleOnClick}
+        >
           {i}
         </button>
       );
@@ -49,18 +54,20 @@ export default function Pages({ quantity }) {
   }
 
   return (
-    <div className={s.Container}>
-      {actual === 1 ? null : (
-        <button className={s.prevornext} onClick={handlePrevious}>
-          Prev
-        </button>
-      )}
-      {quantity > 8 ? setButtons(Math.ceil(quantity / 9)) : null}
-      {actual === Math.ceil(quantity / 9) ? null : (
-        <button className={s.prevornext} onClick={handleNext}>
-          Next
-        </button>
-      )}
+    <div className={s.forCentrate}>
+      <div className={s.Container}>
+        {actual === 1 ? null : (
+          <button className={s.prevornext} onClick={handlePrevious}>
+            Prev
+          </button>
+        )}
+        {quantity > 8 ? setButtons(Math.ceil(quantity / 9)) : null}
+        {actual === Math.ceil(quantity / 9) ? null : (
+          <button className={s.prevornext} onClick={handleNext}>
+            Next
+          </button>
+        )}
+      </div>
     </div>
   );
 }

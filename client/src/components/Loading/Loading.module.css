@@ -1,0 +1,27 @@
+.Loading {
+  z-index: 100;
+  position: fixed;
+  width: 20vw;
+  height: 20vh;
+  top: 25vh;
+  left: 40vw;
+}
+
+.gif {
+  border-radius: 3rem;
+  width: 20vw;
+  height: auto;
+  background-color: transparent;
+  filter: opacity(50%);
+}
+
+.text {
+  text-align: center;
+  font-family: "DM Serif Display", serif;
+  color: #718093;
+  z-index: 10;
+  font-size: 2rem;
+  position: relative;
+  top: -3rem;
+  font-weight: 100;
+}

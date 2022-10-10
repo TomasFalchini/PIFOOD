@@ -2,14 +2,18 @@ import {
   GET_ALL_RECIPES,
   GET_RECIPES,
   GET_DETAILS,
-  CHANGE_THEME,
   SORT_BY_ALPHABET,
   SORT_BY_HEALTH_SCORE,
   GET_DIETS,
   SET_PAGE,
-  CLEAN_DETAILS,
   FILTER_BY_DIET,
+  SET_ERROR,
+  CLEAN_ERROR,
+  DELETE_RECIPE,
+  UPDATE_RECIPE,
 } from "./actiontypes.js";
+
+import axios from "axios";
 
 export const setPage = (number) => {
   return {
@@ -22,7 +26,8 @@ export function GetAllRecipes() {
   return async function (dispatch) {
     let response = await fetch("http://localhost:3001/recipes");
     let data = await response.json();
-    dispatch({ type: GET_ALL_RECIPES, payload: data });
+    if (response.status > 400) dispatch({ type: SET_ERROR, payload: data });
+    else dispatch({ type: GET_ALL_RECIPES, payload: data });
   };
 }
 
@@ -37,11 +42,11 @@ export const GetRecipes = (name) => {
 };
 
 export const GetDetails = (id) => {
-  console.log("hago esto 2");
   return async (dispatch) => {
     let response = await fetch(`http://localhost:3001/recipes/${id}`);
     let data = await response.json();
-    dispatch({ type: GET_DETAILS, payload: data });
+    if (response.status > 400) dispatch({ type: SET_ERROR, payload: data });
+    else dispatch({ type: GET_DETAILS, payload: data });
   };
 };
 
@@ -49,7 +54,8 @@ export const GetDiets = () => {
   return async (dispatch) => {
     let response = await fetch(`http://localhost:3001/diets`);
     let data = await response.json();
-    dispatch({ type: GET_DIETS, payload: data });
+    if (response.status > 400) dispatch({ type: SET_ERROR, payload: data });
+    else dispatch({ type: GET_DIETS, payload: data });
   };
 };
 
@@ -73,20 +79,37 @@ export const FilterByDiets = (diet) => {
       `http://localhost:3001/recipes/filter?diet=${diet}`
     );
     let data = await response.json();
-    dispatch({
-      type: FILTER_BY_DIET,
-      payload: data,
-    });
+    if (response.status > 400) dispatch({ type: SET_ERROR, payload: data });
+    else
+      dispatch({
+        type: FILTER_BY_DIET,
+        payload: data,
+      });
   };
 };
 
-export const ChangeTheme = () => {
+export const CleanError = () => {
   return {
-    type: CHANGE_THEME,
+    type: CLEAN_ERROR,
   };
 };
-export const CleanDetails = () => {
-  return {
-    type: CLEAN_DETAILS,
+
+export const DeleteRecipe = (id) => {
+  return async (dispatch) => {
+    let response = await fetch(`http://localhost:3001/recipes/${id}/delete`, {
+      method: "DELETE",
+      mode: "cors",
+      cache: "no-cache",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    let data = response.json();
+    if (response.status > 400) dispatch({ type: SET_ERROR, payload: data });
+    else dispatch({ type: DELETE_RECIPE, payload: id });
   };
+};
+
+export const UpdateRecipe = () => {
+  return;
 };

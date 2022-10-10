@@ -16,7 +16,7 @@ export default function RecipeExample({
   const defaultImage =
     "https://media.self.com/photos/61e9dae8808d098c8ccc3b58/1:1/w_768,c_limit/15-Bean-Soup-Vegetarian.jpg";
   return (
-    <div>
+    <div className={s.exampleContainer}>
       <RecipeCard
         name={name || "Recipe Example"}
         id={"create"}
@@ -25,12 +25,26 @@ export default function RecipeExample({
           return { name: el };
         })}
       />
-      <h4>{healthScore}</h4>
-      <p>{resume || lorem}</p>
-      {steps?.map((el) => {
-        return <p>{el}</p>;
+      <div className={s.healthScore}>
+        <h4
+          className={
+            healthScore > 75
+              ? s.healthy
+              : healthScore > 50
+              ? s.normal
+              : healthScore > 25
+              ? s.bad
+              : s.nothealthy
+          }
+        >
+          {healthScore}
+        </h4>
+      </div>
+      <p className={s.resume}>{resume || lorem}</p>
+      {steps?.map((el, i) => {
+        return <p className={s.steps}>{el}</p>;
       })}
-      <p>{step || "Add the next step"}</p>
+      <p className={s.steps}>{step || "Add the next step"}</p>
     </div>
   );
 }

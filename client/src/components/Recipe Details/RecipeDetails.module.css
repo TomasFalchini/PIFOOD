@@ -1,5 +1,11 @@
-.ContainerDetails .Loading {
-  font-size: 500px;
+.ContainerDetails {
+  display: flex;
+  justify-content: space-between;
+  margin-left: 5%;
+  height: 100vh;
+  width: 80%;
+  background-color: rgba(242, 242, 242, 0.21);
+  overflow: auto;
 }
 
 .ContainerDetails button {
@@ -7,19 +13,82 @@
 }
 
 .similCard {
-  margin-top: 3.5rem;
-  margin-left: 2rem;
-  width: 80%;
+  margin-top: 2rem;
+  width: 100%;
   display: flex;
   margin-bottom: 2rem;
+  justify-content: space-evenly;
+}
+
+.title {
+  justify-content: space-between;
+  padding: 1rem;
+  flex-direction: column;
+  display: flex;
+  width: 60%;
+}
+
+.dietscont {
+  display: flex;
+  flex-wrap: wrap;
+
+  width: 100%;
+}
+
+.diets {
+  color: #303952;
+  border-radius: 0.35rem;
+  padding: 0.35rem;
+  font-family: "Open Sans", Arial, sans-serif;
+  margin: 0.5rem;
+  height: 2rem;
+  background-color: #7587940f;
 }
 
 .similCard img {
   width: 18rem;
   height: 18rem;
   border-radius: 2rem;
+  filter: opacity(95%);
 }
 
 .similCard h2 {
-  width: 45%;
+  font-size: 2.5rem;
+  width: 100%;
+  color: #2c3e50e7;
+  overflow-y: visible;
+}
+
+.healthscore {
+  color: #131c25e7;
+  margin-left: 1rem;
+  font-size: 1.5rem;
+}
+
+.resume {
+  font-family: "Open Sans", Arial, sans-serif;
+  text-align: justify;
+  border-radius: 1rem;
+  background-color: #7587942a;
+  color: #2c3e50;
+  padding: 1.5rem;
+  margin: 1rem;
+}
+
+.tit {
+  width: 10rem;
+  color: #303952;
+  font-size: 1.2rem;
+  text-indent: 2rem;
+  margin: 0;
+}
+
+.steps {
+  font-family: "Open Sans", Arial, sans-serif;
+  text-align: justify;
+  border-radius: 1rem;
+  background-color: #7587942a;
+  color: #2c3e50;
+  padding: 1.5rem;
+  margin: 1rem;
 }

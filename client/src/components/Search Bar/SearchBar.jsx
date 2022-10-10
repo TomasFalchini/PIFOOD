@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { ChangeTheme, GetRecipes } from "../../Redux/actions/index.js";
+import { GetRecipes } from "../../Redux/actions/index.js";
 import s from "./SearchBar.module.css";
 import lupa from "../../images/lupita.svg";
 
@@ -58,8 +58,6 @@ export function mapStateToProps(state) {
 
 export const mapDispatchToProps = (dispatch) => {
   return {
-    // dispatching plain actions
-    setTheme: () => dispatch(ChangeTheme()),
     getRecipes: (name) => dispatch(GetRecipes(name)),
   };
 };

@@ -5,8 +5,8 @@
   border: none;
   background-color: white;
   display: flex;
-  width: 25vw;
-  height: 12.5vw;
+  min-width: 22rem;
+  min-height: 11rem;
 }
 
 .Text {
@@ -63,7 +63,7 @@
 
   width: 10.3rem;
   font-family: "DM Serif Display", serif;
-  font-style: italic;
+
   font-size: 1rem;
   line-height: 1.2rem;
   transition: all 1s;

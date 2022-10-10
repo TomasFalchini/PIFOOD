@@ -1,7 +1,7 @@
 .filters {
   display: flex;
   flex-direction: column;
-  height: 5rem;
+  height: 7rem;
   position: fixed;
   top: 0.5rem;
   left: 0.5rem;
@@ -12,9 +12,9 @@
   border: none;
 }
 
-select {
+.filters select {
   margin-bottom: 2.5%;
-  height: 29%;
+  height: 22%;
   text-align: center;
   width: 100%;
   font-size: 0.9rem;
@@ -27,6 +27,25 @@ select {
   -webkit-appearance: none;
   -moz-appearance: none;
   transition: all 0.5s ease;
+}
+
+.filters button {
+  border: none;
+  border-radius: 0.5rem;
+  height: 22%;
+  background-color: #2c3e5020;
+  color: #95a5a6e9;
+  transition: all 0.3s linear;
+}
+
+.filters button:hover,
+.filters button:focus {
+  transform: scale(1.02);
+  font-weight: bold;
+  color: #2c3e50;
+  background-color: rgba(255, 255, 255, 0.18);
+
+  border: 2px solid #dcdcdcfa;
 }
 
 .filters:hover,

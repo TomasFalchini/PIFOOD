@@ -24,7 +24,6 @@ function Filters() {
     setStates({
       alphabetic: "",
       health_score: "",
-      diets: "All diets", //array
     });
   }
 
@@ -46,9 +45,13 @@ function Filters() {
 
   function filterByDiets(e) {
     e.preventDefault();
-    setStates({ ...states, diets: e.target.value });
-    if (e.target.value === "All diets") return dispatch(GetAllRecipes()); //ver como combinar esto con todos los demas ordenamientos
-    dispatch(FilterByDiets(e.target.value));
+    (async () => {
+      if (e.target.value === "All diets") await dispatch(GetAllRecipes());
+      else await dispatch(FilterByDiets(e.target.value));
+      if (states.alphabetic) dispatch(SortByAlphabet(states.alphabetic));
+      if (states.health_score)
+        dispatch(SortByHelathScore(states.health_score, states.alphabetic));
+    })();
   }
 
   return (
@@ -66,17 +69,17 @@ function Filters() {
       </select>
 
       {
-        <select value={states.diets} onChange={filterByDiets}>
+        <select onChange={filterByDiets}>
           <option value="All diets">All diets</option>
           <option value="gluten free">Gluten free</option>
-          <option value="dairy free">dairy free</option>
-          <option value="lacto ovo vegetarian">lacto ovo vegetarian</option>
-          <option value="vegan">vegan</option>
-          <option value="paleolithic">paleolithic</option>
-          <option value="primal">primal</option>
-          <option value="whole 30">whole 30</option>
-          <option value="pescatarian">pescatarian</option>
-          <option value="fodmap friendly">fodmap friendly</option>
+          <option value="dairy free">Dairy free</option>
+          <option value="lacto ovo vegetarian">Lacto ovo vegetarian</option>
+          <option value="vegan">Vegan</option>
+          <option value="paleolithic">Paleolithic</option>
+          <option value="primal">Primal</option>
+          <option value="whole 30">Whole 30</option>
+          <option value="pescatarian">Pescatarian</option>
+          <option value="fodmap friendly">Fodmap friendly</option>
         </select>
       }
       <button onClick={handleReset}>RESET ALL</button>

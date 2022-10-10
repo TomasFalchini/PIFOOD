@@ -1,7 +1,8 @@
 //
 import React from "react";
-import { NavLink, Outlet } from "react-router-dom";
-
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 import s from "./NavBar.module.css";
 import icon5 from "../../images/nav-icon5.png";
 import icon7 from "../../images/nav-icon7.png";
@@ -11,6 +12,15 @@ import two from "../../images/2.png";
 import three from "../../images/3.png";
 
 export default function NavBar() {
+  const error = useSelector((state) => state.error);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (error.hasOwnProperty("message")) {
+      navigate("/notfound");
+    }
+  }, [error]);
+
   return (
     <div>
       <img className={s.Banner} src={BANNER} alt="" />

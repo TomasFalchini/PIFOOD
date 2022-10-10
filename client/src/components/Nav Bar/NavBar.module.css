@@ -28,12 +28,13 @@ h3 {
 }
 
 .Banner {
-  width: 20rem;
-  height: 20rem;
+  width: 25rem;
+  height: 25rem;
   z-index: -1;
   position: fixed;
   top: 0;
   right: 0;
+  filter: opacity(75%);
 }
 
 .DivMenu {
@@ -67,9 +68,9 @@ h3 {
 
 ::-webkit-scrollbar {
   width: 0.5rem;
-  background: rgba(0, 0, 0, 0.972);
+  background: #758794e1;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(145, 82, 40, 0.729);
+  background: #2c3e50;
 }
