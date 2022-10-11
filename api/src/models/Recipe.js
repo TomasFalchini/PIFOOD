@@ -9,6 +9,9 @@ module.exports = (sequelize) => {
       name: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+          is: /^[a-zA-Z0-9./,;?&()!_:\s?–-]*$/i,
+        },
       },
       resume: {
         type: DataTypes.TEXT,
@@ -16,6 +19,10 @@ module.exports = (sequelize) => {
       },
       health_score: {
         type: DataTypes.INTEGER,
+        validate: {
+          min: 0,
+          max: 100,
+        },
       },
       steps: {
         type: DataTypes.TEXT,
