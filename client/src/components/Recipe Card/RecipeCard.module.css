@@ -81,6 +81,7 @@
 }
 
 .photo {
+  position: relative;
   overflow: hidden;
   width: 50%;
   max-width: 50%;
@@ -96,4 +97,24 @@
 .photo img:hover {
   filter: opacity(100%);
   transform: scale(1.1);
+}
+
+.buttonsone {
+  width: 1.3rem;
+  height: 1.3rem;
+  position: absolute;
+  top: 0.2rem;
+  right: 1.4rem;
+  border: none;
+  background-color: transparent;
+}
+
+.buttonstwo {
+  width: 1.3rem;
+  height: 1.3rem;
+  position: absolute;
+  top: 0.2rem;
+  right: 0rem;
+  border: none;
+  background-color: transparent;
 }

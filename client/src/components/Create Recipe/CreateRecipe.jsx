@@ -22,7 +22,6 @@ function CreateRecipe() {
   const [diets, setDiets] = useState([]);
   const navigate = useNavigate();
   const handleOnChange = (e) => {
-    console.log(e.target.name);
     setInputs({ ...inputs, [e.target.name]: e.target.value });
   };
 
@@ -35,7 +34,7 @@ function CreateRecipe() {
   const addSteps = (e) => {
     setSteps((steps) => [
       ...steps,
-      `Step Number: ${steps.length + 1} ${inputs.step}`,
+      `Step Number ${steps.length + 1}: ${inputs.step}`,
     ]);
     setInputs({ ...inputs, step: "" });
   };

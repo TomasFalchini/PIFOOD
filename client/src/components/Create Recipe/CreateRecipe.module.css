@@ -140,8 +140,8 @@ input.submit {
 }
 
 input.submit:disabled {
-  background-color: transparent;
-  color: transparent;
+  background-color: #2c3e500c;
+  color: rgba(175, 163, 163, 0.302);
   box-shadow: none;
   border: none;
 }

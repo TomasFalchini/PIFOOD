@@ -1,5 +1,6 @@
 //
 import React from "react";
+import { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import {
@@ -11,13 +12,15 @@ import {
 import s from "./Filters.module.css";
 
 function Filters() {
-  const [states, setStates] = useState({
-    alphabetic: "",
-    health_score: "",
-    diets: "All diets", //array
+  const [states, setStates] = useState(() => {
+    return {
+      alphabetic: "",
+      health_score: "",
+      diets: "All diets", //array
+    };
   });
   const dispatch = useDispatch();
-
+  console.log(states);
   function handleReset(e) {
     e.preventDefault();
     dispatch(GetAllRecipes());
@@ -37,6 +40,7 @@ function Filters() {
 
   function handleChangeSortB(e) {
     e.preventDefault();
+    console.log("me dispare");
     if (e.target.value !== "hide") {
       setStates({ ...states, health_score: e.target.value });
       dispatch(SortByHelathScore(e.target.value, states.alphabetic));
@@ -45,13 +49,23 @@ function Filters() {
 
   function filterByDiets(e) {
     e.preventDefault();
+
     (async () => {
+      await dispatch(GetAllRecipes());
+      if (e.target.value !== "All diets")
+        dispatch(FilterByDiets(e.target.value));
+      if (states.alphabetic) dispatch(SortByAlphabet(states.alphabetic));
+      if (states.health_score)
+        dispatch(SortByHelathScore(states.health_score, states.alphabetic));
+    })();
+
+    /* (async () => {
       if (e.target.value === "All diets") await dispatch(GetAllRecipes());
       else await dispatch(FilterByDiets(e.target.value));
       if (states.alphabetic) dispatch(SortByAlphabet(states.alphabetic));
       if (states.health_score)
         dispatch(SortByHelathScore(states.health_score, states.alphabetic));
-    })();
+    })(); */
   }
 
   return (
