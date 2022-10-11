@@ -50,7 +50,12 @@ export default function Reducer(state = initialState, action) {
     return { ...state, Page: action.payload };
   }
   if (action.type === FILTER_BY_DIET) {
-    return { ...state, Recipes: action.payload };
+    let recipe = state.Recipes.filter((el) =>
+      el.Diets?.map((el) => el.name).includes(action.payload)
+    );
+    return { ...state, Recipes: recipe };
+
+    //return { ...state, Recipes: action.payload };
   }
   if (action.type === SET_ERROR) {
     return { ...state, error: action.payload };

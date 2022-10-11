@@ -40,6 +40,17 @@ export const GetRecipes = (name) => {
     dispatch({ type: GET_RECIPES, payload: data });
   };
 };
+/* export const GetRecipes = (name) => {
+  return (dispatch) => {
+    fetch(
+      `http://localhost:3001/recipes?name=${name.input}`
+    ).then((data)=> data.json()).then((response)=>{
+    dispatch({type: GET_RECIPES, payload: response})
+    })
+
+    axios.get("path").then(data => dispatch({type.... payload:data}))
+  };
+}; */
 
 export const GetDetails = (id) => {
   return async (dispatch) => {
@@ -74,7 +85,11 @@ export const SortByHelathScore = (sort, alph) => {
 };
 
 export const FilterByDiets = (diet) => {
-  return async (dispatch) => {
+  return {
+    type: FILTER_BY_DIET,
+    payload: diet,
+  };
+  /*  return async (dispatch) => {
     let response = await fetch(
       `http://localhost:3001/recipes/filter?diet=${diet}`
     );
@@ -85,7 +100,7 @@ export const FilterByDiets = (diet) => {
         type: FILTER_BY_DIET,
         payload: data,
       });
-  };
+  }; */
 };
 
 export const CleanError = () => {
