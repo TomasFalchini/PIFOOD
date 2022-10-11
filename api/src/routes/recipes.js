@@ -89,18 +89,10 @@ recipesRoute.post("/create", async (req, res, next) => {
 
 recipesRoute.put("/:idReceta/edit", async (req, res, next) => {
   const { idReceta } = req.params;
-  const { name, resume, healthScore, steps, image, diets } = req.body;
+  const { name, image, diets } = req.body;
 
   try {
-    await updateRecipe(
-      idReceta,
-      name,
-      resume,
-      healthScore,
-      steps,
-      image,
-      diets
-    );
+    await updateRecipe(idReceta, name, image, diets);
     return res.status(200).send({ message: "The recipe has been updated" });
   } catch (err) {
     err.status = 404;

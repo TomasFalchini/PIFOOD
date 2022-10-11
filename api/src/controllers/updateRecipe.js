@@ -1,25 +1,23 @@
 const { Recipe, Diet } = require("../db.js");
+const { Op } = require("sequelize");
 
-async function updateRecipe(
-  idReceta,
-  name,
-  resume,
-  health_score,
-  steps,
-  image,
-  diets
-) {
-  let recipe = await Recipe.findByPk(idReceta, {
-    include: Diet,
-  });
+async function updateRecipe(idReceta, name, image, diets) {
+  console.log(name, diets);
+  let recipe = await Recipe.findByPk(idReceta);
   await recipe.update({
     name: name,
-    resume: resume,
-    health_score: health_score,
-    steps: steps,
     image: image,
-    diets: diets,
   });
+  if (diets?.length > 0) {
+    let diet = await Diet.findAll({
+      where: {
+        name: {
+          [Op.like]: { [Op.any]: diets },
+        },
+      },
+    });
+    await recipe.setDiets(diet);
+  }
 }
 
 module.exports = {
