@@ -51,7 +51,6 @@ export class SearchBar extends React.Component {
 
 export function mapStateToProps(state) {
   return {
-    DarkTheme: state.DarkTheme,
     Recipes: state.Recipes,
   };
 }

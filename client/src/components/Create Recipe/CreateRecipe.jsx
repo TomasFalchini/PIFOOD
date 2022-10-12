@@ -1,7 +1,7 @@
 import React from "react";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { GetAllRecipes } from "../../Redux/actions/index";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { GetAllRecipes, GetDiets } from "../../Redux/actions/index";
 import s from "./CreateRecipe.module.css";
 import chef from "../../images/undraw_chef_cu-0-r.svg";
 import { useNavigate } from "react-router-dom";
@@ -10,6 +10,7 @@ import Validate from "../../utils/Validate.js";
 import handlePost from "../../utils/handlePost.js";
 
 function CreateRecipe() {
+  const diet = useSelector((state) => state.Diets);
   const dispatch = useDispatch();
   const [inputs, setInputs] = useState({
     resume: "",
@@ -21,6 +22,11 @@ function CreateRecipe() {
   const [steps, setSteps] = useState([]);
   const [diets, setDiets] = useState([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(GetDiets());
+  }, []);
+
   const handleOnChange = (e) => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
   };
@@ -28,7 +34,7 @@ function CreateRecipe() {
   const addDiets = (e) => {
     if (e.target.value === "hiden") return;
     let diet = new Set([...diets, e.target.value]);
-    setDiets((state) => [...diet]);
+    setDiets([...diet]);
   };
 
   const addSteps = (e) => {
@@ -116,15 +122,9 @@ function CreateRecipe() {
 
         <select onChange={addDiets}>
           <option value="hiden">-- Diets --</option>
-          <option value="gluten free">Gluten free</option>
-          <option value="dairy free">dairy free</option>
-          <option value="lacto ovo vegetarian">lacto ovo vegetarian</option>
-          <option value="vegan">vegan</option>
-          <option value="paleolithic">paleolithic</option>
-          <option value="primal">primal</option>
-          <option value="whole 30">whole 30</option>
-          <option value="pescatarian">pescatarian</option>
-          <option value="fodmap friendly">fodmap friendly</option>
+          {diet.map((el) => {
+            return <option value={el.name}>{el.name}</option>;
+          })}
         </select>
 
         <input
@@ -162,5 +162,3 @@ function CreateRecipe() {
 }
 
 export default CreateRecipe;
-
-//hacer renderizado condicional de options con lo q tengo en el store Diets.

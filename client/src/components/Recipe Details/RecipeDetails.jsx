@@ -1,8 +1,8 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
-import { GetDetails } from "../../Redux/actions/index.js";
+import { useEffect } from "react";
+import { GetDetails, ClearDetails } from "../../Redux/actions/index.js";
 import s from "./RecipeDetails.module.css";
 import Loading from "../Loading/Loading";
 
@@ -12,20 +12,14 @@ function RecipeDetails() {
 
   const Recipe = useSelector((state) => state.RecipeDetails);
 
-  const [loaded, setLoaded] = useState(false);
-
   useEffect(() => {
-    setLoaded(false);
-    async function LoadDetails() {
-      await dispatch(GetDetails(id));
-      setLoaded(true);
-    }
-    LoadDetails();
+    dispatch(GetDetails(id));
+    return dispatch(ClearDetails());
   }, []);
 
   return (
     <div className={s.ContainerDetails}>
-      {loaded ? (
+      {Recipe.name ? (
         <div>
           <div className={s.similCard}>
             <div className={s.title}>

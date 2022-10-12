@@ -1,17 +1,9 @@
 import React from "react";
 
 import { Link } from "react-router-dom";
-import { connect } from "react-redux";
-import { GetAllRecipes, GetDiets } from "../../Redux/actions/index";
 import s from "./Landing.module.css";
 
-/* landing (presentacional, con Link de react router dom), ver el evento on load, para que ya me cargue en la base de datos las recipes. */
-
-export class Landing extends React.Component {
-  componentDidMount() {
-    this.props.GetAllRecipes().then(() => this.props.GetDiets());
-  }
-
+export default class Landing extends React.Component {
   render() {
     return (
       <div className={s.Landing}>
@@ -36,18 +28,3 @@ export class Landing extends React.Component {
   }
 }
 
-export const mapDispatchToProps = (dispatch) => {
-  return {
-    GetAllRecipes: () => dispatch(GetAllRecipes()),
-    GetDiets: () => dispatch(GetDiets()),
-    dispatch,
-  };
-};
-
-export const mapStateToProps = (state) => {
-  return {
-    Recipes: state.Recipes,
-  };
-};
-
-export default connect(null, mapDispatchToProps)(Landing);

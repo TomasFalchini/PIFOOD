@@ -83,7 +83,7 @@ export default function RecipeUpdate() {
       <div className={s.RecipeCardUpdated}>
         <RecipeCard
           name={initialState.name}
-          id={"create"}
+          id={`${id}`}
           image={initialState.image}
           diet={diets.map((el) => {
             return { name: el };

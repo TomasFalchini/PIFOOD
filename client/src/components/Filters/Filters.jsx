@@ -1,6 +1,5 @@
 //
 import React from "react";
-import { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import {
@@ -16,11 +15,11 @@ function Filters() {
     return {
       alphabetic: "",
       health_score: "",
-      diets: "All diets", //array
+      diets: "All diets",
     };
   });
+
   const dispatch = useDispatch();
-  console.log(states);
   function handleReset(e) {
     e.preventDefault();
     dispatch(GetAllRecipes());
@@ -40,7 +39,6 @@ function Filters() {
 
   function handleChangeSortB(e) {
     e.preventDefault();
-    console.log("me dispare");
     if (e.target.value !== "hide") {
       setStates({ ...states, health_score: e.target.value });
       dispatch(SortByHelathScore(e.target.value, states.alphabetic));
@@ -49,7 +47,6 @@ function Filters() {
 
   function filterByDiets(e) {
     e.preventDefault();
-
     (async () => {
       await dispatch(GetAllRecipes());
       if (e.target.value !== "All diets")

@@ -19,7 +19,7 @@ export default function NavBar() {
     if (error.hasOwnProperty("message")) {
       navigate("/notfound");
     }
-  }, [error]);
+  }, [error, navigate]);
 
   return (
     <div>
@@ -34,14 +34,16 @@ export default function NavBar() {
             className={(navData) => (navData.isActive ? "link active" : "link")}
             to="/home/recipes"
           >
-            <img className={s.Icons} src={icon7} alt="" /> HOME
+            <img className={s.Icons} src={icon7} alt="" />
+            <b className={s.redirects}>HOME</b>
           </NavLink>
 
           <NavLink
             className={(navData) => (navData.isActive ? "link active" : "link")}
             to="/home/create"
           >
-            <img className={s.Icons} src={icon5} alt="" /> CREATE
+            <img className={s.Icons} src={icon5} alt="" />
+            <b className={s.redirects}>CREATE</b>
           </NavLink>
         </div>
       </nav>

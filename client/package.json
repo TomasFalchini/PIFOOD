@@ -14,13 +14,13 @@
     "react-scripts": "4.0.3",
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.9",
-    "redux-thunk": "^2.3.0",
+    "redux-thunk": "^2.4.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest --detectOpenHandles --verbose",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

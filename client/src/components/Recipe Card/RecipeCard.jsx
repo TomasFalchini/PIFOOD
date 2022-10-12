@@ -25,8 +25,8 @@ function RecipeCard({ name, id, image, diet, created }) {
           <div>
             <h4>{name.toUpperCase()}</h4>
             <div>
-              {diet?.map((el) => (
-                <p>{el.name.toUpperCase()}</p>
+              {diet?.map((el, i) => (
+                <p key={i}>{el.name.toUpperCase()}</p>
               ))}
             </div>
           </div>
