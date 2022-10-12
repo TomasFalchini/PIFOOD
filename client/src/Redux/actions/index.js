@@ -10,10 +10,8 @@ import {
   SET_ERROR,
   CLEAN_ERROR,
   DELETE_RECIPE,
-  UPDATE_RECIPE,
+  CLEAR_DETAILS,
 } from "./actiontypes.js";
-
-import axios from "axios";
 
 export const setPage = (number) => {
   return {
@@ -22,14 +20,28 @@ export const setPage = (number) => {
   };
 };
 
-export function GetAllRecipes() {
-  return async function (dispatch) {
-    let response = await fetch("http://localhost:3001/recipes");
-    let data = await response.json();
-    if (response.status > 400) dispatch({ type: SET_ERROR, payload: data });
-    else dispatch({ type: GET_ALL_RECIPES, payload: data });
+export const ClearDetails = () => {
+  return {
+    type: CLEAR_DETAILS,
   };
-}
+};
+
+export const GetAllRecipes = () => {
+  return async function (dispatch) {
+    try {
+      let response = await fetch("http://localhost:3001/recipes");
+      let data = await response.json();
+      if (response.status > 400)
+        return dispatch({ type: SET_ERROR, payload: data });
+      else return dispatch({ type: GET_ALL_RECIPES, payload: data });
+    } catch (err) {
+      return dispatch({
+        type: SET_ERROR,
+        payload: { message: "Something has failed" },
+      });
+    }
+  };
+};
 
 export const GetRecipes = (name) => {
   return async (dispatch) => {
@@ -37,7 +49,7 @@ export const GetRecipes = (name) => {
       `http://localhost:3001/recipes?name=${name.input}`
     );
     let data = await response.json();
-    dispatch({ type: GET_RECIPES, payload: data });
+    return dispatch({ type: GET_RECIPES, payload: data });
   };
 };
 /* export const GetRecipes = (name) => {
@@ -56,17 +68,26 @@ export const GetDetails = (id) => {
   return async (dispatch) => {
     let response = await fetch(`http://localhost:3001/recipes/${id}`);
     let data = await response.json();
-    if (response.status > 400) dispatch({ type: SET_ERROR, payload: data });
-    else dispatch({ type: GET_DETAILS, payload: data });
+    if (response.status > 400)
+      return dispatch({ type: SET_ERROR, payload: data });
+    else return dispatch({ type: GET_DETAILS, payload: data });
   };
 };
 
 export const GetDiets = () => {
   return async (dispatch) => {
-    let response = await fetch(`http://localhost:3001/diets`);
-    let data = await response.json();
-    if (response.status > 400) dispatch({ type: SET_ERROR, payload: data });
-    else dispatch({ type: GET_DIETS, payload: data });
+    try {
+      let response = await fetch(`http://localhost:3001/diets`);
+      let data = await response.json();
+      if (response.status > 400)
+        return dispatch({ type: SET_ERROR, payload: data });
+      else return dispatch({ type: GET_DIETS, payload: data });
+    } catch (err) {
+      return dispatch({
+        type: SET_ERROR,
+        payload: { message: "Something has failed" },
+      });
+    }
   };
 };
 
@@ -123,8 +144,4 @@ export const DeleteRecipe = (id) => {
     if (response.status > 400) dispatch({ type: SET_ERROR, payload: data });
     else dispatch({ type: DELETE_RECIPE, payload: id });
   };
-};
-
-export const UpdateRecipe = () => {
-  return;
 };

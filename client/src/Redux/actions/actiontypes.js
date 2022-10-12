@@ -10,3 +10,4 @@ export const SET_ERROR = "SET_ERROR";
 export const CLEAN_ERROR = "CLEAN_ERROR";
 export const DELETE_RECIPE = "DELETE_RECIPE";
 export const UPDATE_RECIPE = "UPDATE_RECIPE";
+export const CLEAR_DETAILS = "CLEAR_DETAILS";

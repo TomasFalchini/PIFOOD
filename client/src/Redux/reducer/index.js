@@ -10,7 +10,7 @@ import {
   SET_ERROR,
   CLEAN_ERROR,
   DELETE_RECIPE,
-  UPDATE_RECIPE,
+  CLEAR_DETAILS,
 } from "../actions/actiontypes";
 
 import sorths from "../../utils/sorths.js";
@@ -58,6 +58,7 @@ export default function Reducer(state = initialState, action) {
     //return { ...state, Recipes: action.payload };
   }
   if (action.type === SET_ERROR) {
+    console.log(action.payload);
     return { ...state, error: action.payload };
   }
   if (action.type === CLEAN_ERROR) {
@@ -69,7 +70,8 @@ export default function Reducer(state = initialState, action) {
       Recipes: state.Recipes.filter((el) => el.ID !== action.payload),
     };
   }
-  if (action.type === UPDATE_RECIPE) {
+  if (action.type === CLEAR_DETAILS) {
+    return { ...state, RecipeDetails: {} };
   }
   return state;
 }
