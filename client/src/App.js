@@ -11,8 +11,6 @@ import SearchBar from "./components/Search Bar/SearchBar";
 import NotFound from "./components/Route Not Found 404/RouteNotFind";
 import RecipeUpdate from "./components/RecipeUpdate/RecipeUpdate.jsx";
 
-//importar todos los componentes para armar las rutas de renderizado.
-
 function App() {
   return (
     <Routes>

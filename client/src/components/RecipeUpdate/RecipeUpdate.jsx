@@ -40,9 +40,10 @@ export default function RecipeUpdate() {
         diets,
       })
       .then((response) => {
-        window.alert(response.data.message);
-        dispatch(GetAllRecipes());
-        navigate(-1);
+        dispatch(GetAllRecipes()).then(() => {
+          window.alert(response.data.message);
+          navigate(-1);
+        });
       })
       .catch((err) => {
         window.alert(err.response.data.message);
