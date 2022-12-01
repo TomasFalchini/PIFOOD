@@ -5,7 +5,16 @@ const path = require("path");
 const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
 
 const sequelize = new Sequelize(
-  `postgres://tomasfalchini:FTNK007RcfwYnIiK512cuU1yVs5k9RNS@dpg-ce4c9e9gp3jocde7v8rg-a/food_psd8?ssl=true`
+  `postgres://tomasfalchini:FTNK007RcfwYnIiK512cuU1yVs5k9RNS@dpg-ce4c9e9gp3jocde7v8rg-a/food_psd8?ssl=true`,
+  {
+    dialect: "postgres",
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false,
+      },
+    },
+  }
 );
 const basename = path.basename(__filename);
 
