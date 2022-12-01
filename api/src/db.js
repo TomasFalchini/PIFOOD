@@ -5,11 +5,7 @@ const path = require("path");
 const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
 
 const sequelize = new Sequelize(
-  `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:5432/food_psd8`,
-  {
-    logging: false, // set to console.log to see the raw SQL queries
-    native: false, // lets Sequelize know we can use pg-native for ~30% more speed
-  }
+  `postgres://tomasfalchini:FTNK007RcfwYnIiK512cuU1yVs5k9RNS@dpg-ce4c9e9gp3jocde7v8rg-a/food_psd8?ssl=true`
 );
 const basename = path.basename(__filename);
 
