@@ -6,8 +6,14 @@ import s from "./RecipeUpdate.module.css";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { GetAllRecipes } from "../../Redux/actions/index.js";
+import { useSpring, animated } from "react-spring";
 
 export default function RecipeUpdate() {
+  const props = useSpring({
+    to: { opacity: 1 },
+    from: { opacity: 0 },
+    delay: 100,
+  });
   const location = useLocation();
   const { name, id, image, diet } = location.state;
   const dispatch = useDispatch();
@@ -51,46 +57,48 @@ export default function RecipeUpdate() {
   }
 
   return (
-    <div className={s.ContainerUpdate}>
-      <form className={s.forms} onSubmit={handleOnSubmit}>
-        <input
-          className={s.inputs}
-          type="text"
-          onChange={handleOnChange}
-          name="name"
-          value={initialState.name}
-        />
-        <input
-          className={s.inputs}
-          type="text"
-          onChange={handleOnChange}
-          name="image"
-          value={initialState.image}
-        />
-        <select className={s.selects} onChange={addDiets}>
-          <option value="hiden">-- Add or Remove Diets --</option>
-          <option value="gluten free">Gluten free</option>
-          <option value="dairy free">dairy free</option>
-          <option value="lacto ovo vegetarian">lacto ovo vegetarian</option>
-          <option value="vegan">vegan</option>
-          <option value="paleolithic">paleolithic</option>
-          <option value="primal">primal</option>
-          <option value="whole 30">whole 30</option>
-          <option value="pescatarian">pescatarian</option>
-          <option value="fodmap friendly">fodmap friendly</option>
-        </select>
-        <input className={s.Update} type="submit" value="UPDATE" />
-      </form>
-      <div className={s.RecipeCardUpdated}>
-        <RecipeCard
-          name={initialState.name}
-          id={`${id}`}
-          image={initialState.image}
-          diet={diets.map((el) => {
-            return { name: el };
-          })}
-        />
+    <animated.div style={props}>
+      <div className={s.ContainerUpdate}>
+        <form className={s.forms} onSubmit={handleOnSubmit}>
+          <input
+            className={s.inputs}
+            type="text"
+            onChange={handleOnChange}
+            name="name"
+            value={initialState.name}
+          />
+          <input
+            className={s.inputs}
+            type="text"
+            onChange={handleOnChange}
+            name="image"
+            value={initialState.image}
+          />
+          <select className={s.selects} onChange={addDiets}>
+            <option value="hiden">-- Add or Remove Diets --</option>
+            <option value="gluten free">Gluten free</option>
+            <option value="dairy free">dairy free</option>
+            <option value="lacto ovo vegetarian">lacto ovo vegetarian</option>
+            <option value="vegan">vegan</option>
+            <option value="paleolithic">paleolithic</option>
+            <option value="primal">primal</option>
+            <option value="whole 30">whole 30</option>
+            <option value="pescatarian">pescatarian</option>
+            <option value="fodmap friendly">fodmap friendly</option>
+          </select>
+          <input className={s.Update} type="submit" value="UPDATE" />
+        </form>
+        <div className={s.RecipeCardUpdated}>
+          <RecipeCard
+            name={initialState.name}
+            id={`${id}`}
+            image={initialState.image}
+            diet={diets.map((el) => {
+              return { name: el };
+            })}
+          />
+        </div>
       </div>
-    </div>
+    </animated.div>
   );
 }
