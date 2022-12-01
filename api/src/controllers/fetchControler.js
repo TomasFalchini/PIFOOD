@@ -6,7 +6,7 @@ const { API_KEY, API_KEY2, API_KEY3 } = process.env;
 async function loadData() {
   let dataFromAPI;
   await fetch(
-    `https://api.spoonacular.com/recipes/complexSearch?addRecipeInformation=true&apiKey=${API_KEY3}&number=100&offset=250`
+    `https://api.spoonacular.com/recipes/complexSearch?addRecipeInformation=true&apiKey=${API_KEY}&number=100&offset=250`
   )
     .then((res) => {
       return res.json();
